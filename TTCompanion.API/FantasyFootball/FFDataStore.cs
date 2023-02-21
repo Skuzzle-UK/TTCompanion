@@ -4,14 +4,14 @@ namespace TTCompanion.API.FantasyFootball
 {
     public class FFDataStore
     {
-        public List<FFTeam> Teams { get; set; }
+        public List<FFRace> Teams { get; set; }
         public static FFDataStore Instance { get; } = new FFDataStore();
 
         public FFDataStore()
         {
-            Teams = new List<FFTeam>()
+            Teams = new List<FFRace>()
             {
-                new FFTeam()
+                new FFRace()
                 {
                     Id = 1,
                     Name = "Shambling Undead",
@@ -42,7 +42,7 @@ namespace TTCompanion.API.FantasyFootball
                         }
                     }
                 },
-                new FFTeam()
+                new FFRace()
                 {
                     Id = 2,
                     Name = "Snotling",

@@ -5,16 +5,16 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [ApiController]
     [Route("ttcompanion.api/fantasyfootball/teams")]
-    public class FFTeamsController : ControllerBase
+    public class FFRacesController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<FFTeam>> GetAllTeams()
+        public ActionResult<IEnumerable<FFRace>> GetAllTeams()
         {
             return Ok(FFDataStore.Instance.Teams);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<FFTeam> GetTeamById(int id)
+        public ActionResult<FFRace> GetTeamById(int id)
         {
             var teamToReturn = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == id);
 
