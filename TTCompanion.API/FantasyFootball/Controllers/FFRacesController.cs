@@ -8,15 +8,15 @@ namespace TTCompanion.API.FantasyFootball.Controllers
     public class FFRacesController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<FFRace>> GetAllTeams()
+        public ActionResult<IEnumerable<FFRaceDto>> GetAllTeams()
         {
-            return Ok(FFDataStore.Instance.Teams);
+            return Ok(FFDataStore.Instance.Races);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<FFRace> GetTeamById(int id)
+        public ActionResult<FFRaceDto> GetTeamById(int id)
         {
-            var teamToReturn = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == id);
+            var teamToReturn = FFDataStore.Instance.Races.FirstOrDefault(t => t.Id == id);
 
             if (teamToReturn == null)
             {

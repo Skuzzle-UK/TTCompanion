@@ -9,9 +9,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
     public class FFPlayersController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<FFPlayer>> GetTeamPlayers(int teamId)
+        public ActionResult<IEnumerable<FFPlayerDto>> GetTeamPlayers(int teamId)
         {
-            var team = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == teamId);
+            var team = FFDataStore.Instance.Races.FirstOrDefault(t => t.Id == teamId);
 
             if(team == null)
             {
@@ -22,9 +22,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("{playerId}")]
-        public ActionResult<FFPlayer> GetPlayerById(int teamId, int playerId)
+        public ActionResult<FFPlayerDto> GetPlayerById(int teamId, int playerId)
         {
-            var team = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == teamId);
+            var team = FFDataStore.Instance.Races.FirstOrDefault(t => t.Id == teamId);
             if (team == null)
             {
                 return NotFound();

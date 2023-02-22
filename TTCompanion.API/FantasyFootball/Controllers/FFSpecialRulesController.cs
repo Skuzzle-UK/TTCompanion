@@ -9,9 +9,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
     public class FFSpecialRulesController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<FFPlayer>> GetTeamSpecialRules(int teamId)
+        public ActionResult<IEnumerable<FFPlayerDto>> GetTeamSpecialRules(int teamId)
         {
-            var team = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == teamId);
+            var team = FFDataStore.Instance.Races.FirstOrDefault(t => t.Id == teamId);
 
             if (team == null)
             {
@@ -22,9 +22,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("{specialRuleId}")]
-        public ActionResult<FFPlayer> GetSpecialRuleById(int teamId, int specialRuleId)
+        public ActionResult<FFPlayerDto> GetSpecialRuleById(int teamId, int specialRuleId)
         {
-            var team = FFDataStore.Instance.Teams.FirstOrDefault(t => t.Id == teamId);
+            var team = FFDataStore.Instance.Races.FirstOrDefault(t => t.Id == teamId);
             if (team == null)
             {
                 return NotFound();

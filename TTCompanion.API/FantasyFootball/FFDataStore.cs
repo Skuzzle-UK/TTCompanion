@@ -4,21 +4,21 @@ namespace TTCompanion.API.FantasyFootball
 {
     public class FFDataStore
     {
-        public List<FFRace> Teams { get; set; }
+        public List<FFRaceDto> Races { get; set; }
         public static FFDataStore Instance { get; } = new FFDataStore();
 
         public FFDataStore()
         {
-            Teams = new List<FFRace>()
+            Races = new List<FFRaceDto>()
             {
-                new FFRace()
+                new FFRaceDto()
                 {
                     Id = 1,
                     Name = "Shambling Undead",
                     CostOfReRolls = 70000,
-                    Players = new List<FFPlayer>()
+                    Players = new List<FFPlayerDto>()
                     {
-                        new FFPlayer()
+                        new FFPlayerDto()
                         {
                             Id = 1,
                             Name = "Ghoul Runner",
@@ -29,7 +29,7 @@ namespace TTCompanion.API.FantasyFootball
                             AV = 8,
                             Cost = 75000
                         },
-                        new FFPlayer()
+                        new FFPlayerDto()
                         {
                             Id = 2,
                             Name = "Mummy",
@@ -42,7 +42,7 @@ namespace TTCompanion.API.FantasyFootball
                         }
                     }
                 },
-                new FFRace()
+                new FFRaceDto()
                 {
                     Id = 2,
                     Name = "Snotling",
