@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball;
 using TTCompanion.API.FantasyFootball.DBContexts;
+using TTCompanion.API.FantasyFootball.Services;
 
 namespace TTCompanion.API
 {
@@ -15,9 +16,11 @@ namespace TTCompanion.API
 
             builder.Services.AddControllers(options =>
             {
-                //options.ReturnHttpNotAcceptable = true;
-                options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/plain"));
-            }).AddXmlDataContractSerializerFormatters();
+                options.ReturnHttpNotAcceptable = true;
+                //options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/plain"));
+            })
+                .AddNewtonsoftJson()
+                .AddXmlDataContractSerializerFormatters();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +28,10 @@ namespace TTCompanion.API
 
             builder.Services.AddSingleton<FFDataStore>();
             builder.Services.AddDbContext<FFContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
+
+            builder.Services.AddScoped<IFFRepository, FFRepository>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 

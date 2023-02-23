@@ -12,6 +12,10 @@ namespace TTCompanion.API.FantasyFootball.Entities
         [MaxLength(50)]
         public string Name { get; set; }
 
+        [ForeignKey("PlayerId")]
+        public FFPlayer? Player { get; set; }
+        public int PlayerId { get; set; }
+
         public FFSkill(string name)
         {
             Name = name;

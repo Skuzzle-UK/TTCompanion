@@ -19,7 +19,7 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public int Cost { get; set; }
         public ICollection<FFSkill> Skills { get; set; } = new List<FFSkill>();
 
-        [ForeignKey("CityId")]
+        [ForeignKey("RaceId")]
         public FFRace? Race { get; set; }
         public int RaceId { get; set; }
 
