@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball;
 using TTCompanion.API.FantasyFootball.DBContexts;
 using TTCompanion.API.FantasyFootball.Services;
+using TTCompanion.API.FantasyFootball.Services.Player;
+using TTCompanion.API.FantasyFootball.Services.Race;
+using TTCompanion.API.FantasyFootball.Services.Skill;
+using TTCompanion.API.FantasyFootball.Services.SpecialRule;
 
 namespace TTCompanion.API
 {
@@ -29,6 +33,10 @@ namespace TTCompanion.API
             builder.Services.AddDbContext<FFContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
 
             builder.Services.AddScoped<IFFRepository, FFRepository>();
+            builder.Services.AddScoped<IFFRaceRepository, FFRaceRepository>();
+            builder.Services.AddScoped<IFFSpecialRuleRepository, FFSpecialRuleRepository>();
+            builder.Services.AddScoped<IFFPlayerRepository, FFPlayerRepository>();
+            builder.Services.AddScoped<IFFSkillRepository, FFSkillRepository>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

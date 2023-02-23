@@ -1,6 +1,6 @@
-﻿namespace TTCompanion.API.FantasyFootball.Models
+﻿namespace TTCompanion.API.FantasyFootball.Models.FFRace
 {
-    public class FFRaceDto
+    public class FFRaceOnlyDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -20,7 +20,5 @@
         public int MaxBloodweiserKegs { get; set; } = 2;
         public int CostOfMasterChef { get; set; } = 300000;
         public int MaxMasterChefs { get; set; } = 1;
-        public ICollection<FFPlayerDto> Players { get; set; } = new List<FFPlayerDto>();
-        public ICollection<FFSpecialRuleDto> SpecialRules { get; set; } = new List<FFSpecialRuleDto>();
     }
 }

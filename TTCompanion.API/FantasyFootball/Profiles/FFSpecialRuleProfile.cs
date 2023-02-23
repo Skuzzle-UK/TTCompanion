@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TTCompanion.API.FantasyFootball.Models.FFSpecialRule;
 
 namespace TTCompanion.API.FantasyFootball.Profiles
 {
@@ -6,7 +7,7 @@ namespace TTCompanion.API.FantasyFootball.Profiles
     {
         public FFSpecialRuleProfile()
         {
-            CreateMap<Entities.FFSpecialRule, Models.FFSpecialRuleDto>();
+            CreateMap<Entities.FFSpecialRule, FFSpecialRuleDto>();
         }
     }
 }

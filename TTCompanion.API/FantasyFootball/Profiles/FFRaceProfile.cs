@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TTCompanion.API.FantasyFootball.Models.FFRace;
 
 namespace TTCompanion.API.FantasyFootball.Profiles
 {
@@ -6,10 +7,10 @@ namespace TTCompanion.API.FantasyFootball.Profiles
     {
         public FFRaceProfile()
         {
-            CreateMap<Entities.FFRace, Models.FFRaceDto>();
-            CreateMap<Entities.FFRace, Models.FFRaceOnlyDto>();
-            CreateMap<Entities.FFRace, Models.FFRaceWithoutPlayersDto>();
-            CreateMap<Entities.FFRace, Models.FFRaceWithoutSpecialRulesDto>();
+            CreateMap<Entities.FFRace, FFRaceDto>();
+            CreateMap<Entities.FFRace, FFRaceOnlyDto>();
+            CreateMap<Entities.FFRace, FFRaceWithoutPlayersDto>();
+            CreateMap<Entities.FFRace, FFRaceWithoutSpecialRulesDto>();
         }
     }
 }

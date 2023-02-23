@@ -1,4 +1,6 @@
-﻿namespace TTCompanion.API.FantasyFootball.Models
+﻿using TTCompanion.API.FantasyFootball.Models.FFSpecialRule;
+
+namespace TTCompanion.API.FantasyFootball.Models.FFRace
 {
     public class FFRaceWithoutPlayersDto
     {

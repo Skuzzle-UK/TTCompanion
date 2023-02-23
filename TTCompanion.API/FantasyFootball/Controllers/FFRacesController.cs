@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TTCompanion.API.FantasyFootball.Models;
+using TTCompanion.API.FantasyFootball.Models.FFRace;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {

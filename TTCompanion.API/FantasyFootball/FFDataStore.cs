@@ -1,4 +1,5 @@
-﻿using TTCompanion.API.FantasyFootball.Models;
+﻿using TTCompanion.API.FantasyFootball.Models.FFPlayer;
+using TTCompanion.API.FantasyFootball.Models.FFRace;
 
 namespace TTCompanion.API.FantasyFootball
 {

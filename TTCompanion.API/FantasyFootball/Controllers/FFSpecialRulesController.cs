@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TTCompanion.API.FantasyFootball.Models;
+using TTCompanion.API.FantasyFootball.Models.FFPlayer;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {

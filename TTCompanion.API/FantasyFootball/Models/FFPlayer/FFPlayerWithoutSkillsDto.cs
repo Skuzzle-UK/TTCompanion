@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TTCompanion.API.FantasyFootball.Models
+﻿namespace TTCompanion.API.FantasyFootball.Models.FFPlayer
 {
-    public class FFPlayerForUpdateDto
+    public class FFPlayerWithoutSkillsDto
     {
-        [Required(ErrorMessage = "You should provide a name value.")]
-        [MaxLength(50)]
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int MA { get; set; }
         public int ST { get; set; }

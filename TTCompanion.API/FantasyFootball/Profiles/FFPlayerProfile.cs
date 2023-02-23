@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TTCompanion.API.FantasyFootball.Models.FFPlayer;
 
 namespace TTCompanion.API.FantasyFootball.Profiles
 {
@@ -6,11 +7,11 @@ namespace TTCompanion.API.FantasyFootball.Profiles
     {
         public FFPlayerProfile()
         {
-            CreateMap<Entities.FFPlayer, Models.FFPlayerDto>();
-            CreateMap<Entities.FFPlayer, Models.FFPlayerWithoutSkillsDto>();
+            CreateMap<Entities.FFPlayer, FFPlayerDto>();
+            CreateMap<Entities.FFPlayer, FFPlayerWithoutSkillsDto>();
 
-            CreateMap<Entities.FFPlayer, Models.FFPlayerForUpdateDto>();
-            CreateMap<Models.FFPlayerForUpdateDto, Entities.FFPlayer>();
+            CreateMap<Entities.FFPlayer, FFPlayerForUpdateDto>();
+            CreateMap<FFPlayerForUpdateDto, Entities.FFPlayer>();
         }
     }
 }

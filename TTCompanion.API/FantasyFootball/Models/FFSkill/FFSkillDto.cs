@@ -1,4 +1,4 @@
-﻿namespace TTCompanion.API.FantasyFootball.Models
+﻿namespace TTCompanion.API.FantasyFootball.Models.FFSkill
 {
     public class FFSkillDto
     {
