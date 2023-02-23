@@ -79,6 +79,11 @@ namespace TTCompanion.API.FantasyFootball.Services
             return await _context.Races.AnyAsync(r => r.Id == raceId);
         }
 
+        public Task AddRaceAsync(FFRace race)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteRace(FFRace race)
         {
             _context.Races.Remove(race);
@@ -101,16 +106,21 @@ namespace TTCompanion.API.FantasyFootball.Services
                 .ToListAsync();
         }
 
-        public async Task<FFSpecialRule?> GetSpecialRuleById(int specialRuleId)
+        public async Task<FFSpecialRule?> GetSpecialRuleByIdAsync(int specialRuleId)
         {
             return await _context.SpecialRules
                 .Where(sr => sr.Id == specialRuleId)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> SpecialRuleExists(int specialRuleId)
+        public async Task<bool> SpecialRuleExistsAsync(int specialRuleId)
         {
             return await _context.SpecialRules.AnyAsync(sr => sr.Id == specialRuleId);
+        }
+
+        public Task AddSpecialRuleForRaceAsync(int raceId, FFSpecialRule specialRule)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteSpecialRule(FFSpecialRule specialRule)
@@ -169,9 +179,14 @@ namespace TTCompanion.API.FantasyFootball.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> PlayerExists(int playerId)
+        public async Task<bool> PlayerExistsAsync(int playerId)
         {
             return await _context.Players.AnyAsync(p => p.Id == playerId);
+        }
+
+        public Task AddPlayerForRaceAsync(int raceId, FFPlayer player)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeletePlayer(FFPlayer player)
@@ -203,9 +218,14 @@ namespace TTCompanion.API.FantasyFootball.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> SkillExists(int skillId)
+        public async Task<bool> SkillExistsAsync(int skillId)
         {
             return await _context.Skills.AnyAsync(s => s.Id == skillId);
+        }
+
+        public Task AddSkillForPlayerAsync(int playerId, FFSkill skill)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteSkill(FFSkill skill)

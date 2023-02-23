@@ -8,6 +8,9 @@ namespace TTCompanion.API.FantasyFootball.Profiles
         {
             CreateMap<Entities.FFPlayer, Models.FFPlayerDto>();
             CreateMap<Entities.FFPlayer, Models.FFPlayerWithoutSkillsDto>();
+
+            CreateMap<Entities.FFPlayer, Models.FFPlayerForUpdateDto>();
+            CreateMap<Models.FFPlayerForUpdateDto, Entities.FFPlayer>();
         }
     }
 }

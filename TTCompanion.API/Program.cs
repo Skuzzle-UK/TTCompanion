@@ -17,7 +17,6 @@ namespace TTCompanion.API
             builder.Services.AddControllers(options =>
             {
                 options.ReturnHttpNotAcceptable = true;
-                //options.Filters.Add(new ProducesAttribute("application/json", "application/xml", "text/plain"));
             })
                 .AddNewtonsoftJson()
                 .AddXmlDataContractSerializerFormatters();
