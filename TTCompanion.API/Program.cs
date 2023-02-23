@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball;
 using TTCompanion.API.FantasyFootball.DBContexts;

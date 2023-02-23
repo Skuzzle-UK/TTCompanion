@@ -8,8 +8,8 @@ using TTCompanion.API.FantasyFootball.Services.Race;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
-    [Route("ttcompanion.api/fantasyfootball")]
     [ApiController]
+    [Route("ttcompanion.api/fantasyfootball")]
     public class FFPlayersController : ControllerBase
     {
         private readonly IFFRepository _FFRepository;
@@ -25,7 +25,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("players", Name = "GetPlayers")]
+        [HttpGet("players", Name = "Get Players")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersAsync()
         {
             var players = await _FFPlayerRepository.GetPlayersAsync();
@@ -37,7 +37,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerWithoutSkillsDto>>(players));
         }
 
-        [HttpGet("players/includeskills", Name = "GetPlayersWithSkills")]
+        [HttpGet("players/includeskills", Name = "Get Players With Skills")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersWithSkillsAsync()
         {
             var players = await _FFPlayerRepository.GetPlayersAsync(true);
@@ -49,7 +49,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerDto>>(players));
         }
 
-        [HttpGet("players/{raceId}", Name = "GetPlayersForRace")]
+        [HttpGet("players/{raceId}", Name = "Get Players For Race")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersForRaceAsync(int raceId)
         {
             if(!await _FFRaceRepository.RaceExistsAsync(raceId))
@@ -66,7 +66,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerWithoutSkillsDto>>(players));
         }
 
-        [HttpGet("players/{raceId}/includeskills", Name = "GetPlayersWithSkillsForRace")]
+        [HttpGet("players/{raceId}/includeskills", Name = "Get Players With Skills For Race")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersWithSkillsForRaceAsync(int raceId)
         {
             if (!await _FFRaceRepository.RaceExistsAsync(raceId))
@@ -83,7 +83,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerDto>>(players));
         }
 
-        [HttpGet("players/{playerId}", Name = "GetPlayerById")]
+        [HttpGet("players/{playerId}", Name = "Get Player By Id")]
         public async Task<ActionResult<FFPlayerDto>> GetPlayerByIdAsync(int playerId)
         {
             if (!await _FFPlayerRepository.PlayerExistsAsync(playerId))
@@ -96,7 +96,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<FFPlayerWithoutSkillsDto>(player));
         }
 
-        [HttpGet("players/{playerId}/includeskills", Name = "GetPlayerWithSkillsById")]
+        [HttpGet("players/{playerId}/includeskills", Name = "Get Player With Skills By Id")]
         public async Task<ActionResult<FFPlayerDto>> GetPlayerWithSkillsByIdAsync(int playerId)
         {
             if (!await _FFPlayerRepository.PlayerExistsAsync(playerId))
@@ -109,7 +109,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<FFPlayerDto>(player));
         }
 
-        [HttpPost("players", Name = "CreatePlayer")]
+        [HttpPost("players", Name = "Create Player")]
         public async Task<ActionResult<FFPlayerDto>> CreatePlayer(int raceId, FFPlayerDto player)
         {
             if (!await _FFRaceRepository.RaceExistsAsync(raceId))
@@ -123,9 +123,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 
             await _FFRepository.SaveChangesAsync();
 
-            var createdPlayerToReturn = _mapper.Map<FFPlayerWithoutSkillsDto>(finalPlayer);
+            var createdPlayerToReturn = _mapper.Map<FFPlayerDto>(finalPlayer);
 
-            return CreatedAtRoute("GetPlayerById",
+            return CreatedAtRoute("Get Player By Id",
                 new
                 {
                     raceId = raceId,
@@ -134,7 +134,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 createdPlayerToReturn);
         }
 
-        [HttpPost("players/{playerId}", Name = "UpdatePlayer")]
+        [HttpPost("players/{playerId}", Name = "Update Player")]
         public async Task<ActionResult> UpdatePlayer(int playerId, FFPlayerForUpdateDto player)
         {
             var playerEntity = await _FFPlayerRepository.GetPlayerByIdAsync(playerId);
@@ -149,7 +149,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return NoContent();
         }
 
-        [HttpPatch("players/{playerId}", Name = "PartiallyUpdatePlayer")]
+        [HttpPatch("players/{playerId}", Name = "Partially Update Player")]
         public async Task<ActionResult> PartiallyUpdatePlayer(int playerId, JsonPatchDocument<FFPlayerForUpdateDto> patchDocument)
         {
             var playerEntity = await _FFPlayerRepository.GetPlayerByIdAsync(playerId);
@@ -179,7 +179,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return NoContent();
         }
 
-        [HttpDelete("players/{playerId}", Name = "DeletePlayer")]
+        [HttpDelete("players/{playerId}", Name = "Delete Player")]
         public async Task<ActionResult> DeletePlayer(int playerId)
         {
 
