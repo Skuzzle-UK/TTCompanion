@@ -11,6 +11,9 @@ namespace TTCompanion.API.FantasyFootball.Profiles
             CreateMap<Entities.FFRace, FFRaceOnlyDto>();
             CreateMap<Entities.FFRace, FFRaceWithoutPlayersDto>();
             CreateMap<Entities.FFRace, FFRaceWithoutSpecialRulesDto>();
+
+            CreateMap<Entities.FFRace, FFRaceForUpdateDto>();
+            CreateMap<FFRaceForUpdateDto, Entities.FFRace>();
         }
     }
 }

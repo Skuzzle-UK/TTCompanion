@@ -49,7 +49,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerDto>>(players));
         }
 
-        [HttpGet("players/{raceId}", Name = "Get Players For Race")]
+        [HttpGet("race/{raceId}/players", Name = "Get Players For Race")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersForRaceAsync(int raceId)
         {
             if(!await _FFRaceRepository.RaceExistsAsync(raceId))
@@ -66,7 +66,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             return Ok(_mapper.Map<IEnumerable<FFPlayerWithoutSkillsDto>>(players));
         }
 
-        [HttpGet("players/{raceId}/includeskills", Name = "Get Players With Skills For Race")]
+        [HttpGet("race/{raceId}/players/includeskills", Name = "Get Players With Skills For Race")]
         public async Task<ActionResult<IEnumerable<FFPlayerDto>>> GetPlayersWithSkillsForRaceAsync(int raceId)
         {
             if (!await _FFRaceRepository.RaceExistsAsync(raceId))
