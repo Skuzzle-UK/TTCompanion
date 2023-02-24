@@ -1,6 +1,4 @@
-﻿using TTCompanion.API.FantasyFootball.Entities;
-
-namespace TTCompanion.API.FantasyFootball.Services.Race
+﻿namespace TTCompanion.API.FantasyFootball.Services.Race
 {
     public interface IRaceRepository
     {

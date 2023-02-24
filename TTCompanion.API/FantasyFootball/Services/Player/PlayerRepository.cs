@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball.DBContexts;
-using TTCompanion.API.FantasyFootball.Entities;
 
 namespace TTCompanion.API.FantasyFootball.Services.Player
 {

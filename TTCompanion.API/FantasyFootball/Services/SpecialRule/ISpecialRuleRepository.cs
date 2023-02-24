@@ -1,6 +1,4 @@
-﻿using TTCompanion.API.FantasyFootball.Entities;
-
-namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
+﻿namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
 {
     public interface ISpecialRuleRepository
     {

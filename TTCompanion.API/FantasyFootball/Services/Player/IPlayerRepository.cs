@@ -1,6 +1,4 @@
-﻿using TTCompanion.API.FantasyFootball.Entities;
-
-namespace TTCompanion.API.FantasyFootball.Services.Player
+﻿namespace TTCompanion.API.FantasyFootball.Services.Player
 {
     public interface IPlayerRepository
     {
