@@ -1,6 +1,6 @@
 ﻿namespace TTCompanion.API.FantasyFootball.Services
 {
-    public interface IFFRepository
+    public interface IRepository
     {
         Task<bool> SaveChangesAsync();
     }

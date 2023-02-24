@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball;
 using TTCompanion.API.FantasyFootball.DBContexts;
@@ -20,6 +21,12 @@ namespace TTCompanion.API
             builder.Services.AddControllers(options =>
             {
                 options.ReturnHttpNotAcceptable = true;
+                options.Filters.Add(new ProducesAttribute(
+                    "application/json",
+                    "application/xml",
+                    "text/json",
+                    "text/xml"
+                    ));
             })
                 .AddNewtonsoftJson()
                 .AddXmlDataContractSerializerFormatters();
@@ -28,14 +35,14 @@ namespace TTCompanion.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton<FFDataStore>();
-            builder.Services.AddDbContext<FFContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
+            builder.Services.AddSingleton<DataStore>();
+            builder.Services.AddDbContext<DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
 
-            builder.Services.AddScoped<IFFRepository, FFRepository>();
-            builder.Services.AddScoped<IFFRaceRepository, FFRaceRepository>();
-            builder.Services.AddScoped<IFFSpecialRuleRepository, FFSpecialRuleRepository>();
-            builder.Services.AddScoped<IFFPlayerRepository, FFPlayerRepository>();
-            builder.Services.AddScoped<IFFSkillRepository, FFSkillRepository>();
+            builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IRaceRepository, RaceRepository>();
+            builder.Services.AddScoped<ISpecialRuleRepository, SpecialRuleRepository>();
+            builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+            builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
