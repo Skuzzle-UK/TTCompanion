@@ -11,25 +11,28 @@ namespace TTCompanion.API.FantasyFootball.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public int CostOfReRolls { get; set; }
-        public int MaxReRolls { get; set; }
-        public int CostOfBribes { get; set; }
-        public int MaxBribes { get; set; }
-        public int CostOfCheerleader { get; set; }
-        public int MaxCheerleaders { get; set; }
-        public int CostOfAssistantCoach { get; set; }
-        public int MaxAssistantCoachs { get; set; }
-        public int CostOfDedicatedFan { get; set; }
-        public int MaxDedicatedFans { get; set; }
-        public bool ApothecaryAvailable { get; set; }
-        public int? CostOfApothercary { get; set; }
-        public int CostOfBloodweiserKeg { get; set; }
-        public int MaxBloodweiserKegs { get; set; }
-        public int CostOfMasterChef { get; set; }
-        public int MaxMasterChefs { get; set; }
+        public int CostOfReRolls { get; set; } = 60000;
+        public int MaxReRolls { get; set; } = 8;
+        public int CostOfBribes { get; set; } = 100000;
+        public int MaxBribes { get; set; } = 3;
+        public int CostOfCheerleader { get; set; } = 10000;
+        public int MaxCheerleaders { get; set; } = 12;
+        public int CostOfAssistantCoach { get; set; } = 10000;
+        public int MaxAssistantCoachs { get; set; } = 6;
+        public int CostOfDedicatedFan { get; set; } = 10000;
+        public int MaxDedicatedFans { get; set; } = 6;
+        public int CostOfApothecary { get; set; } = 50000;
+        public int MaxApothecarys { get; set; } = 1;
+        public int CostOfBloodweiserKeg { get; set; } = 50000;
+        public int MaxBloodweiserKegs { get; set; } = 2;
+        public int CostOfMasterChef { get; set; } = 300000;
+        public int MaxMasterChefs { get; set; } = 1;
+        public int CostOfRiotousRookies { get; set; } = 100000;
+        public int MaxRiotousRookies { get; set; } = 0;
         public ICollection<Player> Players { get; set; } = new List<Player>();
         public ICollection<SpecialRule> SpecialRules { get; set; } = new List<SpecialRule>();
 
+        public bool CanDelete { get; set; } = true;
         public Race(string name)
         {
             Name = name;

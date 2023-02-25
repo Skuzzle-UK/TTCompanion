@@ -11,6 +11,9 @@ namespace TTCompanion.API.FantasyFootball.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        [MaxLength(500)]
+        public string? Description { get; set; }
+        public bool CanDelete { get; set; } = true;
 
         [ForeignKey("RaceId")]
         public Race? Race { get; set; }

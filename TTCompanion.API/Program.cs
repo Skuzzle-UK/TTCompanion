@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball;
-using TTCompanion.API.FantasyFootball.DBContexts;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
 using TTCompanion.API.FantasyFootball.Services.Race;
@@ -36,7 +35,7 @@ namespace TTCompanion.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddSingleton<DataStore>();
-            builder.Services.AddDbContext<DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
+            builder.Services.AddDbContext<FantasyFootball.DBContexts.DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IRaceRepository, RaceRepository>();
@@ -47,6 +46,13 @@ namespace TTCompanion.API
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider
+                    .GetRequiredService<FantasyFootball.DBContexts.DBContext>();
+                dbContext.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -68,7 +74,7 @@ namespace TTCompanion.API
 
 
             app.MapControllers();
-
+            
             app.Run();
         }
     }

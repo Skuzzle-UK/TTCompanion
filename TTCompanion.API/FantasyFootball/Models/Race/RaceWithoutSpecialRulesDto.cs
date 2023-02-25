@@ -16,12 +16,14 @@ namespace TTCompanion.API.FantasyFootball.Models.Race
         public int MaxAssistantCoachs { get; set; } = 6;
         public int CostOfDedicatedFan { get; set; } = 10000;
         public int MaxDedicatedFans { get; set; } = 6;
-        public bool ApothecaryAvailable { get; set; } = false;
-        public int? CostOfApothercary { get; set; } = null;
+        public int CostOfApothecary { get; set; } = 50000;
+        public int MaxApothecarys { get; set; } = 1;
         public int CostOfBloodweiserKeg { get; set; } = 50000;
         public int MaxBloodweiserKegs { get; set; } = 2;
         public int CostOfMasterChef { get; set; } = 300000;
         public int MaxMasterChefs { get; set; } = 1;
+        public int CostOfRiotousRookies { get; set; } = 100000;
+        public int MaxRiotousRookies { get; set; } = 0;
         public ICollection<PlayerDto> Players { get; set; } = new List<PlayerDto>();
     }
 }
