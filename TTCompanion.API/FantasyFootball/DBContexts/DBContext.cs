@@ -17,40 +17,49 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<RaceSpecialRule>().HasKey(rsr => new {rsr.RaceId, rsr.SpecialRuleId});
+            modelBuilder.Entity<Skill>()
+                .HasMany(s => s.Players)
+                .WithMany(p => p.Skills)
+                .UsingEntity(j => j
+                    .ToTable("PlayerSkill"))
+                .HasData(
+                    new Skill("Dodge")
+                    {
+                        Id = 1
+                    }
+                );
 
-            //modelBuilder.Entity<RaceSpecialRule>()
-            //    .HasOne<Race>(rsr => rsr.Race)
-            //    .WithMany(rsr => rsr.SpecialRules)
-            //    .HasForeignKey(rsr => rsr.RaceId);
-
-            //modelBuilder.Entity<RaceSpecialRule>()
-            //    .HasOne(rsr => rsr.SpecialRule)
-            //    .WithMany(rsr => rsr.Races)
-            //    .HasForeignKey(rsr => rsr.SpecialRuleId);
-
-            //var ghoulRunner = new Player("Ghoul Runner")
-            //{
-            //    Id = 1,
-            //    MA = 7,
-            //    ST = 3,
-            //    AG = 3,
-            //    PA = 4,
-            //    AV = 8,
-            //    Cost = 75000,
-            //    CanDelete = false
-            //};
-            //var mummy = new Player("Mummy")
-            //{
-            //    Id = 2,
-            //    MA = 3,
-            //    ST = 5,
-            //    AG = 5,
-            //    PA = null,
-            //    AV = 10,
-            //    Cost = 125000,
-            //    CanDelete = false
-            //};
+            modelBuilder.Entity<Player>()
+                .HasMany(p => p.Skills)
+                .WithMany(s => s.Players)
+                .UsingEntity(j => j
+                    .ToTable("PlayerSkill")
+                    .HasData(
+                    new { SkillsId = 1, PlayersId = 1 }
+                    ))
+                .HasData(
+            new Player("Ghoul Runner")
+            {
+                Id = 1,
+                MA = 7,
+                ST = 3,
+                AG = 3,
+                PA = 4,
+                AV = 8,
+                Cost = 75000,
+                CanDelete = false
+            },
+            new Player("Mummy")
+            {
+                Id = 2,
+                MA = 3,
+                ST = 5,
+                AG = 5,
+                PA = null,
+                AV = 10,
+                Cost = 125000,
+                CanDelete = false
+            });
 
             modelBuilder.Entity<SpecialRule>()
                 .HasData(
@@ -60,12 +69,20 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                 });
 
             modelBuilder.Entity<Race>()
+                .HasMany(r => r.Players)
+                .WithMany(p => p.Races)
+                .UsingEntity(j => j
+                    .ToTable("PlayerRace")
+                    .HasData(
+                    new { PlayersId = 1, RacesId = 1 },
+                    new { PlayersId = 2, RacesId = 1 }
+                    ))
                 .HasMany(r => r.SpecialRules)
                 .WithMany(sr => sr.Races)
                 .UsingEntity(j => j
                     .ToTable("RaceSpecialRule")
-                    .HasData(new
-                    { RacesId = 1, SpecialRulesId = 1 }
+                    .HasData(
+                    new { RacesId = 1, SpecialRulesId = 1 }
                     ))
                 .HasData(
                 new Race("Shambling Undead")
@@ -74,8 +91,6 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                     CostOfReRolls = 70000,
                     MaxApothecarys = 0,
                     CanDelete = false,
-                    //Players = new List<Player>() { ghoulRunner, mummy },
-                    //SpecialRules = new List<RaceSpecialRule>() {mastersOfUndeath}
                 },
                 new Race("Snotling")
                 {

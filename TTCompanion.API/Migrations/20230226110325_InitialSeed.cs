@@ -166,12 +166,20 @@ namespace TTCompanion.API.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Players",
+                columns: new[] { "Id", "AG", "AV", "CanDelete", "Cost", "MA", "Name", "PA", "ST" },
+                values: new object[,]
+                {
+                    { 1, 3, 8, false, 75000, 7, "Ghoul Runner", 4, 3 },
+                    { 2, 5, 10, false, 125000, 3, "Mummy", null, 5 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Races",
                 columns: new[] { "Id", "CanDelete", "CostOfApothecary", "CostOfAssistantCoach", "CostOfBloodweiserKeg", "CostOfBribes", "CostOfCheerleader", "CostOfDedicatedFan", "CostOfMasterChef", "CostOfReRolls", "CostOfRiotousRookies", "MaxApothecarys", "MaxAssistantCoachs", "MaxBloodweiserKegs", "MaxBribes", "MaxCheerleaders", "MaxDedicatedFans", "MaxMasterChefs", "MaxReRolls", "MaxRiotousRookies", "Name" },
                 values: new object[,]
                 {
                     { 1, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Shambling Undead" },
-                    { 2, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 1, "Snotling" },
                     { 3, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Amazon" },
                     { 4, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Black Orc" },
                     { 5, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Choas Chosen" },
@@ -204,9 +212,28 @@ namespace TTCompanion.API.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Skills",
+                columns: new[] { "Id", "CanDelete", "Name" },
+                values: new object[] { 1, true, "Dodge" });
+
+            migrationBuilder.InsertData(
                 table: "SpecialRules",
                 columns: new[] { "Id", "CanDelete", "Description", "Name" },
                 values: new object[] { 1, true, null, "Masters of Undeath" });
+
+            migrationBuilder.InsertData(
+                table: "PlayerRace",
+                columns: new[] { "PlayersId", "RacesId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PlayerSkill",
+                columns: new[] { "PlayersId", "SkillsId" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "RaceSpecialRule",

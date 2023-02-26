@@ -26,6 +26,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
                 return await _context.Races
                     .OrderBy(r => r.Name)
                     .Include(r => r.Players)
+                    .ThenInclude(s => s.Skills)
                     .ToListAsync();
             }
             if (includeSpecialRules && includePlayers)
@@ -34,6 +35,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
                     .OrderBy(r => r.Name)
                     .Include(r => r.SpecialRules)
                     .Include(r => r.Players)
+                    .ThenInclude(s => s.Skills)
                     .ToListAsync();
             }
 
@@ -55,6 +57,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
             {
                 return await _context.Races
                     .Include(r => r.Players)
+                    .ThenInclude(s => s.Skills)
                     .Where(r => r.Id == raceId)
                     .FirstOrDefaultAsync();
             }
@@ -63,6 +66,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
                 return await _context.Races
                     .Include(r => r.SpecialRules)
                     .Include(r => r.Players)
+                    .ThenInclude(s => s.Skills)
                     .Where(r => r.Id == raceId)
                     .FirstOrDefaultAsync();
             }

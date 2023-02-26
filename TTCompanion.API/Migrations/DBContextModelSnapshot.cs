@@ -29,7 +29,19 @@ namespace TTCompanion.API.Migrations
 
                     b.HasIndex("RacesId");
 
-                    b.ToTable("PlayerRace");
+                    b.ToTable("PlayerRace", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PlayersId = 1,
+                            RacesId = 1
+                        },
+                        new
+                        {
+                            PlayersId = 2,
+                            RacesId = 1
+                        });
                 });
 
             modelBuilder.Entity("PlayerSkill", b =>
@@ -44,7 +56,14 @@ namespace TTCompanion.API.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("PlayerSkill");
+                    b.ToTable("PlayerSkill", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PlayersId = 1,
+                            SkillsId = 1
+                        });
                 });
 
             modelBuilder.Entity("RaceSpecialRule", b =>
@@ -104,6 +123,31 @@ namespace TTCompanion.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Players");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AG = 3,
+                            AV = 8,
+                            CanDelete = false,
+                            Cost = 75000,
+                            MA = 7,
+                            Name = "Ghoul Runner",
+                            PA = 4,
+                            ST = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AG = 5,
+                            AV = 10,
+                            CanDelete = false,
+                            Cost = 125000,
+                            MA = 3,
+                            Name = "Mummy",
+                            ST = 5
+                        });
                 });
 
             modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Race", b =>
@@ -205,7 +249,7 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 27,
                             CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
@@ -805,30 +849,6 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 27,
-                            CanDelete = false,
-                            CostOfApothecary = 50000,
-                            CostOfAssistantCoach = 10000,
-                            CostOfBloodweiserKeg = 50000,
-                            CostOfBribes = 50000,
-                            CostOfCheerleader = 10000,
-                            CostOfDedicatedFan = 10000,
-                            CostOfMasterChef = 300000,
-                            CostOfReRolls = 60000,
-                            CostOfRiotousRookies = 100000,
-                            MaxApothecarys = 1,
-                            MaxAssistantCoachs = 6,
-                            MaxBloodweiserKegs = 2,
-                            MaxBribes = 3,
-                            MaxCheerleaders = 12,
-                            MaxDedicatedFans = 6,
-                            MaxMasterChefs = 1,
-                            MaxReRolls = 8,
-                            MaxRiotousRookies = 1,
-                            Name = "Snotling"
-                        },
-                        new
-                        {
                             Id = 29,
                             CanDelete = false,
                             CostOfApothecary = 50000,
@@ -942,6 +962,14 @@ namespace TTCompanion.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CanDelete = true,
+                            Name = "Dodge"
+                        });
                 });
 
             modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.SpecialRule", b =>
