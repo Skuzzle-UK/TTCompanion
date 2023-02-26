@@ -5,10 +5,16 @@ Initially this will start with an API followed by a Blood Bowl companion app for
 
 ## Rules
 Anybody can contribute. Code will be reviewed via pull request before it makes it to master. Unit tests must be created in an associated xUnit tests project and submissions must pass all tests.
+
 Contributors should aim for clean coding but guidance will be given if a pull request needs work before merging.
+
 Documentation is also key to a successful project so if you make code changes that might need documenting then please update readme's and wiki.
+
 If you are not a coder then feel free to update wiki and do what you can.
-All projects are C# .NET 6 (Core) where possible
+
+All projects are C# .NET 6 (Core) where possible.
+
+Visual Studio 2022 is recommended for code contributions. The Community version is fine. It may be possible to use other IDE's/Editors for certain contributions
 
 ## Projects
 ### TTCompanion.API
