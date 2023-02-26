@@ -31,6 +31,7 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public int MaxRiotousRookies { get; set; } = 0;
         public ICollection<Player> Players { get; set; } = new List<Player>();
         public ICollection<SpecialRule> SpecialRules { get; set; } = new List<SpecialRule>();
+        //public ICollection<RaceSpecialRule> SpecialRules { get; set; } = new List<RaceSpecialRule>();
 
         public bool CanDelete { get; set; } = true;
         public Race(string name)

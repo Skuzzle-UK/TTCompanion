@@ -7,11 +7,31 @@
 namespace TTCompanion.API.Migrations
 {
     /// <inheritdoc />
-    public partial class initialSeed : Migration
+    public partial class InitialSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Players",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    MA = table.Column<int>(type: "INTEGER", nullable: true),
+                    ST = table.Column<int>(type: "INTEGER", nullable: true),
+                    AG = table.Column<int>(type: "INTEGER", nullable: true),
+                    PA = table.Column<int>(type: "INTEGER", nullable: true),
+                    AV = table.Column<int>(type: "INTEGER", nullable: true),
+                    Cost = table.Column<int>(type: "INTEGER", nullable: true),
+                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Players", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Races",
                 columns: table => new
@@ -45,30 +65,17 @@ namespace TTCompanion.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Players",
+                name: "Skills",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    MA = table.Column<int>(type: "INTEGER", nullable: true),
-                    ST = table.Column<int>(type: "INTEGER", nullable: true),
-                    AG = table.Column<int>(type: "INTEGER", nullable: true),
-                    PA = table.Column<int>(type: "INTEGER", nullable: true),
-                    AV = table.Column<int>(type: "INTEGER", nullable: true),
-                    Cost = table.Column<int>(type: "INTEGER", nullable: true),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: true),
-                    RaceId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Players", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Players_Races_RaceId",
-                        column: x => x.RaceId,
-                        principalTable: "Races",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Skills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,37 +86,81 @@ namespace TTCompanion.API.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false),
-                    RaceId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SpecialRules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerRace",
+                columns: table => new
+                {
+                    PlayersId = table.Column<int>(type: "INTEGER", nullable: false),
+                    RacesId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerRace", x => new { x.PlayersId, x.RacesId });
                     table.ForeignKey(
-                        name: "FK_SpecialRules_Races_RaceId",
-                        column: x => x.RaceId,
+                        name: "FK_PlayerRace_Players_PlayersId",
+                        column: x => x.PlayersId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerRace_Races_RacesId",
+                        column: x => x.RacesId,
                         principalTable: "Races",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Skills",
+                name: "PlayerSkill",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PlayersId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SkillsId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Skills", x => x.Id);
+                    table.PrimaryKey("PK_PlayerSkill", x => new { x.PlayersId, x.SkillsId });
                     table.ForeignKey(
-                        name: "FK_Skills_Players_PlayerId",
-                        column: x => x.PlayerId,
+                        name: "FK_PlayerSkill_Players_PlayersId",
+                        column: x => x.PlayersId,
                         principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerSkill_Skills_SkillsId",
+                        column: x => x.SkillsId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RaceSpecialRule",
+                columns: table => new
+                {
+                    RacesId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SpecialRulesId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RaceSpecialRule", x => new { x.RacesId, x.SpecialRulesId });
+                    table.ForeignKey(
+                        name: "FK_RaceSpecialRule_Races_RacesId",
+                        column: x => x.RacesId,
+                        principalTable: "Races",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RaceSpecialRule_SpecialRules_SpecialRulesId",
+                        column: x => x.SpecialRulesId,
+                        principalTable: "SpecialRules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -153,44 +204,54 @@ namespace TTCompanion.API.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Players",
-                columns: new[] { "Id", "AG", "AV", "CanDelete", "Cost", "MA", "Name", "PA", "RaceId", "ST" },
-                values: new object[,]
-                {
-                    { 1, 3, 8, false, 75000, 7, "Ghoul Runner", 4, 1, 3 },
-                    { 2, 5, 10, false, 125000, 3, "Mummy", null, 1, 5 }
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Players_RaceId",
-                table: "Players",
-                column: "RaceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Skills_PlayerId",
-                table: "Skills",
-                column: "PlayerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SpecialRules_RaceId",
                 table: "SpecialRules",
-                column: "RaceId");
+                columns: new[] { "Id", "CanDelete", "Description", "Name" },
+                values: new object[] { 1, true, null, "Masters of Undeath" });
+
+            migrationBuilder.InsertData(
+                table: "RaceSpecialRule",
+                columns: new[] { "RacesId", "SpecialRulesId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerRace_RacesId",
+                table: "PlayerRace",
+                column: "RacesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerSkill_SkillsId",
+                table: "PlayerSkill",
+                column: "SkillsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RaceSpecialRule_SpecialRulesId",
+                table: "RaceSpecialRule",
+                column: "SpecialRulesId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Skills");
+                name: "PlayerRace");
 
             migrationBuilder.DropTable(
-                name: "SpecialRules");
+                name: "PlayerSkill");
+
+            migrationBuilder.DropTable(
+                name: "RaceSpecialRule");
 
             migrationBuilder.DropTable(
                 name: "Players");
 
             migrationBuilder.DropTable(
+                name: "Skills");
+
+            migrationBuilder.DropTable(
                 name: "Races");
+
+            migrationBuilder.DropTable(
+                name: "SpecialRules");
         }
     }
 }

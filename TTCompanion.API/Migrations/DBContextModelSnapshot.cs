@@ -17,6 +17,58 @@ namespace TTCompanion.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
+            modelBuilder.Entity("PlayerRace", b =>
+                {
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RacesId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PlayersId", "RacesId");
+
+                    b.HasIndex("RacesId");
+
+                    b.ToTable("PlayerRace");
+                });
+
+            modelBuilder.Entity("PlayerSkill", b =>
+                {
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SkillsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PlayersId", "SkillsId");
+
+                    b.HasIndex("SkillsId");
+
+                    b.ToTable("PlayerSkill");
+                });
+
+            modelBuilder.Entity("RaceSpecialRule", b =>
+                {
+                    b.Property<int>("RacesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SpecialRulesId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("RacesId", "SpecialRulesId");
+
+                    b.HasIndex("SpecialRulesId");
+
+                    b.ToTable("RaceSpecialRule", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RacesId = 1,
+                            SpecialRulesId = 1
+                        });
+                });
+
             modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -46,44 +98,12 @@ namespace TTCompanion.API.Migrations
                     b.Property<int?>("PA")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RaceId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("ST")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RaceId");
-
                     b.ToTable("Players");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AG = 3,
-                            AV = 8,
-                            CanDelete = false,
-                            Cost = 75000,
-                            MA = 7,
-                            Name = "Ghoul Runner",
-                            PA = 4,
-                            RaceId = 1,
-                            ST = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AG = 5,
-                            AV = 10,
-                            CanDelete = false,
-                            Cost = 125000,
-                            MA = 3,
-                            Name = "Mummy",
-                            RaceId = 1,
-                            ST = 5
-                        });
                 });
 
             modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Race", b =>
@@ -919,12 +939,7 @@ namespace TTCompanion.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
 
                     b.ToTable("Skills");
                 });
@@ -947,59 +962,62 @@ namespace TTCompanion.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RaceId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RaceId");
-
                     b.ToTable("SpecialRules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CanDelete = true,
+                            Name = "Masters of Undeath"
+                        });
                 });
 
-            modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Player", b =>
+            modelBuilder.Entity("PlayerRace", b =>
                 {
-                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Race", "Race")
-                        .WithMany("Players")
-                        .HasForeignKey("RaceId")
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Race");
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Race", null)
+                        .WithMany()
+                        .HasForeignKey("RacesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Skill", b =>
+            modelBuilder.Entity("PlayerSkill", b =>
                 {
-                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Player", "Player")
-                        .WithMany("Skills")
-                        .HasForeignKey("PlayerId")
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Player");
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.SpecialRule", b =>
+            modelBuilder.Entity("RaceSpecialRule", b =>
                 {
-                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Race", "Race")
-                        .WithMany("SpecialRules")
-                        .HasForeignKey("RaceId")
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.Race", null)
+                        .WithMany()
+                        .HasForeignKey("RacesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Race");
-                });
-
-            modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Player", b =>
-                {
-                    b.Navigation("Skills");
-                });
-
-            modelBuilder.Entity("TTCompanion.API.FantasyFootball.Entities.Race", b =>
-                {
-                    b.Navigation("Players");
-
-                    b.Navigation("SpecialRules");
+                    b.HasOne("TTCompanion.API.FantasyFootball.Entities.SpecialRule", null)
+                        .WithMany()
+                        .HasForeignKey("SpecialRulesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

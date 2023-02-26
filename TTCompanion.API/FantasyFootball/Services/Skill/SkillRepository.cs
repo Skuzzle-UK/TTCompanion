@@ -21,9 +21,13 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
 
         public async Task<IEnumerable<Entities.Skill>> GetSkillsForPlayerAsync(int playerId)
         {
+            var player = await _context.Players
+                .Where(p => p.Id == playerId)
+                .FirstOrDefaultAsync();
+
             return await _context.Skills
                 .OrderBy(s => s.Name)
-                .Where(s => s.PlayerId == playerId)
+                .Where(s => s.Players == player)
                 .ToListAsync();
         }
 

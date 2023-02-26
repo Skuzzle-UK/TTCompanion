@@ -7,33 +7,79 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
     public class DBContext : DbContext
     {
         public DbSet<Race> Races { get; set; } = null!;
-        public DbSet<Player> Players { get; set; } = null!;
         public DbSet<SpecialRule> SpecialRules { get; set; } = null!;
+        public DbSet<Player> Players { get; set; } = null!;
         public DbSet<Skill> Skills { get; set; } = null!;
 
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
         }
-        
-        var mastersOfUndeath = new SpecialRule("Masters of Undeath")
-        {
-          Id = 1
-        };
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Race>().HasData(
+            //modelBuilder.Entity<RaceSpecialRule>().HasKey(rsr => new {rsr.RaceId, rsr.SpecialRuleId});
+
+            //modelBuilder.Entity<RaceSpecialRule>()
+            //    .HasOne<Race>(rsr => rsr.Race)
+            //    .WithMany(rsr => rsr.SpecialRules)
+            //    .HasForeignKey(rsr => rsr.RaceId);
+
+            //modelBuilder.Entity<RaceSpecialRule>()
+            //    .HasOne(rsr => rsr.SpecialRule)
+            //    .WithMany(rsr => rsr.Races)
+            //    .HasForeignKey(rsr => rsr.SpecialRuleId);
+
+            //var ghoulRunner = new Player("Ghoul Runner")
+            //{
+            //    Id = 1,
+            //    MA = 7,
+            //    ST = 3,
+            //    AG = 3,
+            //    PA = 4,
+            //    AV = 8,
+            //    Cost = 75000,
+            //    CanDelete = false
+            //};
+            //var mummy = new Player("Mummy")
+            //{
+            //    Id = 2,
+            //    MA = 3,
+            //    ST = 5,
+            //    AG = 5,
+            //    PA = null,
+            //    AV = 10,
+            //    Cost = 125000,
+            //    CanDelete = false
+            //};
+
+            modelBuilder.Entity<SpecialRule>()
+                .HasData(
+                new SpecialRule("Masters of Undeath")
+                {
+                    Id = 1
+                });
+
+            modelBuilder.Entity<Race>()
+                .HasMany(r => r.SpecialRules)
+                .WithMany(sr => sr.Races)
+                .UsingEntity(j => j
+                    .ToTable("RaceSpecialRule")
+                    .HasData(new
+                    { RacesId = 1, SpecialRulesId = 1 }
+                    ))
+                .HasData(
                 new Race("Shambling Undead")
                 {
                     Id = 1,
                     CostOfReRolls = 70000,
                     MaxApothecarys = 0,
-                    CanDelete = false, 
-                    SpecialRules = new List<SpecialRule>() {mastersOfUndeath}
+                    CanDelete = false,
+                    //Players = new List<Player>() { ghoulRunner, mummy },
+                    //SpecialRules = new List<RaceSpecialRule>() {mastersOfUndeath}
                 },
                 new Race("Snotling")
                 {
-                    Id = 2,
+                    Id = 27,
                     CostOfBribes = 50000,
                     MaxRiotousRookies = 1,
                     CanDelete = false
@@ -180,13 +226,6 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                     CostOfReRolls = 50000,
                     CanDelete = false
                 },
-                new Race("Snotling")
-                {
-                    Id = 27,
-                    CostOfBribes = 50000,
-                    MaxRiotousRookies = 1,
-                    CanDelete = false
-                },
                 new Race("Tomb Kings")
                 {
                     Id = 29,
@@ -213,32 +252,6 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                     CanDelete = false
                 }
                 );
-
-            modelBuilder.Entity<Player>().HasData(
-                new Player("Ghoul Runner") {
-                    Id = 1,
-                    RaceId = 1,
-                    MA = 7,
-                    ST = 3,
-                    AG = 3,
-                    PA = 4,
-                    AV = 8,
-                    Cost = 75000,
-                    CanDelete = false
-                },
-                new Player("Mummy")
-                {
-                    Id = 2,
-                    RaceId = 1,
-                    MA = 3,
-                    ST = 5,
-                    AG = 5,
-                    PA = null,
-                    AV = 10,
-                    Cost = 125000,
-                    CanDelete = false
-                });
-            
             base.OnModelCreating(modelBuilder);
         }
     }

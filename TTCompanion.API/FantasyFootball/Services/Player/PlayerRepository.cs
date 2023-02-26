@@ -29,18 +29,19 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
 
         public async Task<IEnumerable<Entities.Player>> GetPlayersForRaceAsync(int raceId, bool includeSkills)
         {
+            //@TODO work out how to do this
             if (includeSkills)
             {
                 return await _context.Players
                     .OrderBy(p => p.Name)
                     .Include(p => p.Skills)
-                    .Where(p => p.RaceId == raceId)
+                    //.Where(p => p.RacesId == raceId)
                     .ToListAsync();
             }
 
             return await _context.Players
                 .OrderBy(p => p.Name)
-                .Where(p => p.RaceId == raceId)
+                //.Where(p => p.RacesId == raceId)
                 .ToListAsync();
         }
 

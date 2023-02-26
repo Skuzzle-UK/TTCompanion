@@ -13,7 +13,7 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public string Name { get; set; }
         public bool CanDelete { get; set; } = true;
 
-        public ICollection<Player> Players { get; set; } = new List<Players>();
+        public ICollection<Player> Players { get; set; } = new List<Player>();
 
         public Skill(string name)
         {

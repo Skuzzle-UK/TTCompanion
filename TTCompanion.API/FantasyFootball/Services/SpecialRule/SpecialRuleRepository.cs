@@ -21,9 +21,10 @@ namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
 
         public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesForRaceAsync(int raceId)
         {
+            //@TODO work out how to do this
             return await _context.SpecialRules
                 .OrderBy(sr => sr.Name)
-                .Where(sr => sr.RaceId == raceId)
+                //.Where(sr => sr.Races.Contains(race))
                 .ToListAsync();
         }
 
