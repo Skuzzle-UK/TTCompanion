@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTCompanion.API", "TTCompanion.API\TTCompanion.API.csproj", "{CEB5B3EE-A23E-4F0C-91BF-6B4C7870235F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTCompanion.API", "TTCompanion.API\TTCompanion.API.csproj", "{CEB5B3EE-A23E-4F0C-91BF-6B4C7870235F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTCompanion.API.Tests", "TTCompanion.API.Tests\TTCompanion.API.Tests.csproj", "{B2FBE091-9516-44AD-9ABB-418C69D374FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CEB5B3EE-A23E-4F0C-91BF-6B4C7870235F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEB5B3EE-A23E-4F0C-91BF-6B4C7870235F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEB5B3EE-A23E-4F0C-91BF-6B4C7870235F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FBE091-9516-44AD-9ABB-418C69D374FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FBE091-9516-44AD-9ABB-418C69D374FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FBE091-9516-44AD-9ABB-418C69D374FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FBE091-9516-44AD-9ABB-418C69D374FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
