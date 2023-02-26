@@ -80,6 +80,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound();
             }
 
+            if (!specialRuleEntity.Modifiable)
+            {
+                return Unauthorized();
+            }
+
             _mapper.Map(specialRule, specialRuleEntity);
             await _repository.SaveChangesAsync();
 
@@ -93,6 +98,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (specialRuleEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!specialRuleEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             var specialRuleToPatch = _mapper.Map<SpecialRuleForUpdateDto>(specialRuleEntity);
@@ -119,11 +129,15 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         [HttpDelete("specialrules/{specialRuleId}", Name = "Delete Special Rule")]
         public async Task<ActionResult> DeleteSpecialRule(int specialRuleId)
         {
-
             var specialRuleEntity = await _specialRuleRepository.GetSpecialRuleByIdAsync(specialRuleId);
             if (specialRuleEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!specialRuleEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             _specialRuleRepository.DeleteSpecialRule(specialRuleEntity);

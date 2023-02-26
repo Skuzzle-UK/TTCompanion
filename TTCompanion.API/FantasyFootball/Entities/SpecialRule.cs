@@ -11,15 +11,15 @@ namespace TTCompanion.API.FantasyFootball.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        [MaxLength(500)]
-        public string? Description { get; set; }
-        public bool CanDelete { get; set; } = true;
+        public bool Modifiable { get; set; } = true;
         
-        public ICollection<Race> Races { get; set; } = new List<Race>();
+        public ICollection<Race> Races { get; } = new List<Race>();
 
-        public SpecialRule(string name)
+        internal SpecialRule(int id, string name)
         {
+            Id = id;
             Name = name;
+            Modifiable = false;
         }
     }
 }

@@ -18,14 +18,16 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public int? AV { get; set; }
         public int? Cost { get; set; }
         public ICollection<Skill> Skills { get; set; } = new List<Skill>();
-        public bool? CanDelete { get; set; } = true;
+        public bool Modifiable { get; } = true;
         
         public ICollection<Race> Races { get; set; } = new List<Race>();
 
 
-        public Player(string name)
+        internal Player(int id, string name)
         {
+            Id = id;
             Name = name;
+            Modifiable = false;
         }
     }
 }

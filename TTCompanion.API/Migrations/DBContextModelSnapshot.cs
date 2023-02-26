@@ -100,9 +100,6 @@ namespace TTCompanion.API.Migrations
                     b.Property<int?>("AV")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("CanDelete")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("Cost")
                         .HasColumnType("INTEGER");
 
@@ -130,7 +127,6 @@ namespace TTCompanion.API.Migrations
                             Id = 1,
                             AG = 3,
                             AV = 8,
-                            CanDelete = false,
                             Cost = 75000,
                             MA = 7,
                             Name = "Ghoul Runner",
@@ -142,7 +138,6 @@ namespace TTCompanion.API.Migrations
                             Id = 2,
                             AG = 5,
                             AV = 10,
-                            CanDelete = false,
                             Cost = 125000,
                             MA = 3,
                             Name = "Mummy",
@@ -154,9 +149,6 @@ namespace TTCompanion.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("CanDelete")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CostOfApothecary")
@@ -225,56 +217,7 @@ namespace TTCompanion.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CanDelete = false,
-                            CostOfApothecary = 50000,
-                            CostOfAssistantCoach = 10000,
-                            CostOfBloodweiserKeg = 50000,
-                            CostOfBribes = 100000,
-                            CostOfCheerleader = 10000,
-                            CostOfDedicatedFan = 10000,
-                            CostOfMasterChef = 300000,
-                            CostOfReRolls = 70000,
-                            CostOfRiotousRookies = 100000,
-                            MaxApothecarys = 0,
-                            MaxAssistantCoachs = 6,
-                            MaxBloodweiserKegs = 2,
-                            MaxBribes = 3,
-                            MaxCheerleaders = 12,
-                            MaxDedicatedFans = 6,
-                            MaxMasterChefs = 1,
-                            MaxReRolls = 8,
-                            MaxRiotousRookies = 0,
-                            Name = "Shambling Undead"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            CanDelete = false,
-                            CostOfApothecary = 50000,
-                            CostOfAssistantCoach = 10000,
-                            CostOfBloodweiserKeg = 50000,
-                            CostOfBribes = 50000,
-                            CostOfCheerleader = 10000,
-                            CostOfDedicatedFan = 10000,
-                            CostOfMasterChef = 300000,
-                            CostOfReRolls = 60000,
-                            CostOfRiotousRookies = 100000,
-                            MaxApothecarys = 1,
-                            MaxAssistantCoachs = 6,
-                            MaxBloodweiserKegs = 2,
-                            MaxBribes = 3,
-                            MaxCheerleaders = 12,
-                            MaxDedicatedFans = 6,
-                            MaxMasterChefs = 1,
-                            MaxReRolls = 8,
-                            MaxRiotousRookies = 1,
-                            Name = "Snotling"
-                        },
-                        new
-                        {
                             Id = 3,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -298,7 +241,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 4,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -322,7 +264,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 5,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -346,7 +287,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 6,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -370,7 +310,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 7,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -394,7 +333,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 8,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -418,7 +356,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 9,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -442,7 +379,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 10,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -466,7 +402,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 11,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -490,7 +425,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 12,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -514,7 +448,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 13,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -538,7 +471,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 14,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -562,7 +494,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 15,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -586,7 +517,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 16,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -610,7 +540,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 17,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -634,7 +563,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 18,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -658,7 +586,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 19,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -682,7 +609,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 20,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -706,7 +632,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 21,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -730,7 +655,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 22,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -754,7 +678,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 23,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -778,7 +701,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 24,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -801,8 +723,30 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
+                            Id = 1,
+                            CostOfApothecary = 50000,
+                            CostOfAssistantCoach = 10000,
+                            CostOfBloodweiserKeg = 50000,
+                            CostOfBribes = 100000,
+                            CostOfCheerleader = 10000,
+                            CostOfDedicatedFan = 10000,
+                            CostOfMasterChef = 300000,
+                            CostOfReRolls = 70000,
+                            CostOfRiotousRookies = 100000,
+                            MaxApothecarys = 0,
+                            MaxAssistantCoachs = 6,
+                            MaxBloodweiserKegs = 2,
+                            MaxBribes = 3,
+                            MaxCheerleaders = 12,
+                            MaxDedicatedFans = 6,
+                            MaxMasterChefs = 1,
+                            MaxReRolls = 8,
+                            MaxRiotousRookies = 0,
+                            Name = "Shambling Undead"
+                        },
+                        new
+                        {
                             Id = 25,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -826,7 +770,6 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 26,
-                            CanDelete = false,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -849,8 +792,30 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 29,
-                            CanDelete = false,
+                            Id = 2,
+                            CostOfApothecary = 50000,
+                            CostOfAssistantCoach = 10000,
+                            CostOfBloodweiserKeg = 50000,
+                            CostOfBribes = 50000,
+                            CostOfCheerleader = 10000,
+                            CostOfDedicatedFan = 10000,
+                            CostOfMasterChef = 300000,
+                            CostOfReRolls = 60000,
+                            CostOfRiotousRookies = 100000,
+                            MaxApothecarys = 1,
+                            MaxAssistantCoachs = 6,
+                            MaxBloodweiserKegs = 2,
+                            MaxBribes = 3,
+                            MaxCheerleaders = 12,
+                            MaxDedicatedFans = 6,
+                            MaxMasterChefs = 1,
+                            MaxReRolls = 8,
+                            MaxRiotousRookies = 1,
+                            Name = "Snotling"
+                        },
+                        new
+                        {
+                            Id = 27,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -873,8 +838,7 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 30,
-                            CanDelete = false,
+                            Id = 28,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -897,8 +861,7 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 31,
-                            CanDelete = false,
+                            Id = 29,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -921,8 +884,7 @@ namespace TTCompanion.API.Migrations
                         },
                         new
                         {
-                            Id = 32,
-                            CanDelete = false,
+                            Id = 30,
                             CostOfApothecary = 50000,
                             CostOfAssistantCoach = 10000,
                             CostOfBloodweiserKeg = 50000,
@@ -951,7 +913,7 @@ namespace TTCompanion.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("CanDelete")
+                    b.Property<bool>("Modifiable")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -967,8 +929,14 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 1,
-                            CanDelete = true,
+                            Modifiable = false,
                             Name = "Dodge"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Modifiable = false,
+                            Name = "Defensive"
                         });
                 });
 
@@ -978,12 +946,8 @@ namespace TTCompanion.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("CanDelete")
+                    b.Property<bool>("Modifiable")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -998,7 +962,7 @@ namespace TTCompanion.API.Migrations
                         new
                         {
                             Id = 1,
-                            CanDelete = true,
+                            Modifiable = false,
                             Name = "Masters of Undeath"
                         });
                 });

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 using TTCompanion.API.FantasyFootball.Models.Player;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
@@ -143,6 +144,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound();
             }
 
+            if (!playerEntity.Modifiable)
+            {
+                return Unauthorized();
+            }
+
             _mapper.Map(player, playerEntity);
             await _repository.SaveChangesAsync();
             
@@ -156,6 +162,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (playerEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!playerEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             var playerToPatch = _mapper.Map<PlayerForUpdateDto>(playerEntity);
@@ -187,6 +198,10 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (playerEntity == null)
             {
                 return NotFound();
+            }
+            if(!playerEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             _playerRepository.DeletePlayer(playerEntity);

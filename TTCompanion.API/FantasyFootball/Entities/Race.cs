@@ -33,8 +33,14 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public ICollection<SpecialRule> SpecialRules { get; set; } = new List<SpecialRule>();
         //public ICollection<RaceSpecialRule> SpecialRules { get; set; } = new List<RaceSpecialRule>();
 
-        public bool CanDelete { get; set; } = true;
-        public Race(string name)
+        public bool Modifiable { get; } = true;
+        internal Race(int id, string name)
+        {
+            Id = id;
+            Name = name;
+            Modifiable = false;
+        }
+        internal Race(string name)
         {
             Name = name;
         }

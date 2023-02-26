@@ -7,7 +7,7 @@
 namespace TTCompanion.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSeed : Migration
+    public partial class InitialStructureAndSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,8 +24,7 @@ namespace TTCompanion.API.Migrations
                     AG = table.Column<int>(type: "INTEGER", nullable: true),
                     PA = table.Column<int>(type: "INTEGER", nullable: true),
                     AV = table.Column<int>(type: "INTEGER", nullable: true),
-                    Cost = table.Column<int>(type: "INTEGER", nullable: true),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: true)
+                    Cost = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,8 +55,7 @@ namespace TTCompanion.API.Migrations
                     CostOfMasterChef = table.Column<int>(type: "INTEGER", nullable: false),
                     MaxMasterChefs = table.Column<int>(type: "INTEGER", nullable: false),
                     CostOfRiotousRookies = table.Column<int>(type: "INTEGER", nullable: false),
-                    MaxRiotousRookies = table.Column<int>(type: "INTEGER", nullable: false),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false)
+                    MaxRiotousRookies = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +69,7 @@ namespace TTCompanion.API.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Modifiable = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,8 +83,7 @@ namespace TTCompanion.API.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    CanDelete = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Modifiable = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,59 +164,63 @@ namespace TTCompanion.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Players",
-                columns: new[] { "Id", "AG", "AV", "CanDelete", "Cost", "MA", "Name", "PA", "ST" },
+                columns: new[] { "Id", "AG", "AV", "Cost", "MA", "Name", "PA", "ST" },
                 values: new object[,]
                 {
-                    { 1, 3, 8, false, 75000, 7, "Ghoul Runner", 4, 3 },
-                    { 2, 5, 10, false, 125000, 3, "Mummy", null, 5 }
+                    { 1, 3, 8, 75000, 7, "Ghoul Runner", 4, 3 },
+                    { 2, 5, 10, 125000, 3, "Mummy", null, 5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Races",
-                columns: new[] { "Id", "CanDelete", "CostOfApothecary", "CostOfAssistantCoach", "CostOfBloodweiserKeg", "CostOfBribes", "CostOfCheerleader", "CostOfDedicatedFan", "CostOfMasterChef", "CostOfReRolls", "CostOfRiotousRookies", "MaxApothecarys", "MaxAssistantCoachs", "MaxBloodweiserKegs", "MaxBribes", "MaxCheerleaders", "MaxDedicatedFans", "MaxMasterChefs", "MaxReRolls", "MaxRiotousRookies", "Name" },
+                columns: new[] { "Id", "CostOfApothecary", "CostOfAssistantCoach", "CostOfBloodweiserKeg", "CostOfBribes", "CostOfCheerleader", "CostOfDedicatedFan", "CostOfMasterChef", "CostOfReRolls", "CostOfRiotousRookies", "MaxApothecarys", "MaxAssistantCoachs", "MaxBloodweiserKegs", "MaxBribes", "MaxCheerleaders", "MaxDedicatedFans", "MaxMasterChefs", "MaxReRolls", "MaxRiotousRookies", "Name" },
                 values: new object[,]
                 {
-                    { 1, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Shambling Undead" },
-                    { 3, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Amazon" },
-                    { 4, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Black Orc" },
-                    { 5, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Choas Chosen" },
-                    { 6, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Chaos Dwarf" },
-                    { 7, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Chaos Renegade" },
-                    { 8, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Daemons of Khorne" },
-                    { 9, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Dark Elf" },
-                    { 10, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Dwarf" },
-                    { 11, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Elven Union" },
-                    { 12, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Goblin" },
-                    { 13, false, 50000, 10000, 50000, 100000, 10000, 10000, 100000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Halfling" },
-                    { 14, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "High Elf" },
-                    { 15, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Human" },
-                    { 16, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Imperial Nobility" },
-                    { 17, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Khorne" },
-                    { 18, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Lizardmen" },
-                    { 19, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Necromantic Horror" },
-                    { 20, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Norse" },
-                    { 21, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Nurgle" },
-                    { 22, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 1, "Ogre" },
-                    { 23, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Old World Alliance" },
-                    { 24, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Orc" },
-                    { 25, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Skaven" },
-                    { 26, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Slann" },
-                    { 27, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 1, "Snotling" },
-                    { 29, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Tomb Kings" },
-                    { 30, false, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Underworld Denizens" },
-                    { 31, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Vampire" },
-                    { 32, false, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Wood Elf" }
+                    { 1, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Shambling Undead" },
+                    { 2, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 1, "Snotling" },
+                    { 3, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Amazon" },
+                    { 4, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Black Orc" },
+                    { 5, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Choas Chosen" },
+                    { 6, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Chaos Dwarf" },
+                    { 7, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Chaos Renegade" },
+                    { 8, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Daemons of Khorne" },
+                    { 9, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Dark Elf" },
+                    { 10, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Dwarf" },
+                    { 11, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Elven Union" },
+                    { 12, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Goblin" },
+                    { 13, 50000, 10000, 50000, 100000, 10000, 10000, 100000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Halfling" },
+                    { 14, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "High Elf" },
+                    { 15, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Human" },
+                    { 16, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Imperial Nobility" },
+                    { 17, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Khorne" },
+                    { 18, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Lizardmen" },
+                    { 19, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Necromantic Horror" },
+                    { 20, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Norse" },
+                    { 21, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Nurgle" },
+                    { 22, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 1, "Ogre" },
+                    { 23, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Old World Alliance" },
+                    { 24, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Orc" },
+                    { 25, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Skaven" },
+                    { 26, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 50000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Slann" },
+                    { 27, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 0, 6, 2, 3, 12, 6, 1, 8, 0, "Tomb Kings" },
+                    { 28, 50000, 10000, 50000, 50000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Underworld Denizens" },
+                    { 29, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 70000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Vampire" },
+                    { 30, 50000, 10000, 50000, 100000, 10000, 10000, 300000, 60000, 100000, 1, 6, 2, 3, 12, 6, 1, 8, 0, "Wood Elf" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Skills",
-                columns: new[] { "Id", "CanDelete", "Name" },
-                values: new object[] { 1, true, "Dodge" });
+                columns: new[] { "Id", "Modifiable", "Name" },
+                values: new object[,]
+                {
+                    { 1, false, "Dodge" },
+                    { 2, false, "Defensive" }
+                });
 
             migrationBuilder.InsertData(
                 table: "SpecialRules",
-                columns: new[] { "Id", "CanDelete", "Description", "Name" },
-                values: new object[] { 1, true, null, "Masters of Undeath" });
+                columns: new[] { "Id", "Modifiable", "Name" },
+                values: new object[] { 1, false, "Masters of Undeath" });
 
             migrationBuilder.InsertData(
                 table: "PlayerRace",

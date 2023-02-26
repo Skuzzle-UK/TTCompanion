@@ -140,6 +140,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound();
             }
 
+            if (!raceEntity.Modifiable)
+            {
+                return Unauthorized();
+            }
+
             _mapper.Map(race, raceEntity);
             await _repository.SaveChangesAsync();
 
@@ -153,6 +158,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (raceEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!raceEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             var raceToPatch = _mapper.Map<RaceForUpdateDto>(raceEntity);
@@ -184,6 +194,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (raceEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!raceEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             _raceRepository.DeleteRace(raceEntity);

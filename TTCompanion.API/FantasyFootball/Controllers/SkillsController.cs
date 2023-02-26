@@ -78,6 +78,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound();
             }
 
+            if (!skillEntity.Modifiable)
+            {
+                return Unauthorized();
+            }
+
             _mapper.Map(skill, skillEntity);
             await _repository.SaveChangesAsync();
 
@@ -91,6 +96,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (skillEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!skillEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             var skillToPatch = _mapper.Map<SkillForUpdateDto>(skillEntity);
@@ -122,6 +132,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             if (skillEntity == null)
             {
                 return NotFound();
+            }
+
+            if (!skillEntity.Modifiable)
+            {
+                return Unauthorized();
             }
 
             _skillRepository.DeleteSkill(skillEntity);
