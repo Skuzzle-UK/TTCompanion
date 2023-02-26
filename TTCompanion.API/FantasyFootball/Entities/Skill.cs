@@ -13,9 +13,7 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public string Name { get; set; }
         public bool CanDelete { get; set; } = true;
 
-        [ForeignKey("PlayerId")]
-        public Player? Player { get; set; }
-        public int PlayerId { get; set; }
+        public ICollection<Player> Players { get; set; } = new List<Players>();
 
         public Skill(string name)
         {

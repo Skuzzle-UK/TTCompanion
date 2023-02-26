@@ -19,10 +19,8 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public int? Cost { get; set; }
         public ICollection<Skill> Skills { get; set; } = new List<Skill>();
         public bool? CanDelete { get; set; } = true;
-
-        [ForeignKey("RaceId")]
-        public Race? Race { get; set; }
-        public int RaceId { get; set; }
+        
+        public ICollection<Race> Races { get; set; } = new List<Race>();
 
 
         public Player(string name)

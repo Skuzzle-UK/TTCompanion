@@ -14,7 +14,12 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
         }
-
+        
+        var mastersOfUndeath = new SpecialRule("Masters of Undeath")
+        {
+          Id = 1
+        };
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Race>().HasData(
@@ -23,7 +28,8 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                     Id = 1,
                     CostOfReRolls = 70000,
                     MaxApothecarys = 0,
-                    CanDelete = false
+                    CanDelete = false, 
+                    SpecialRules = new List<SpecialRule>() {mastersOfUndeath}
                 },
                 new Race("Snotling")
                 {

@@ -14,11 +14,8 @@ namespace TTCompanion.API.FantasyFootball.Entities
         [MaxLength(500)]
         public string? Description { get; set; }
         public bool CanDelete { get; set; } = true;
-
-        [ForeignKey("RaceId")]
-        public Race? Race { get; set; }
-        public int RaceId { get; set; }
-
+        
+        public ICollection<Race> Races { get; set; } = new List<Race>();
 
         public SpecialRule(string name)
         {
