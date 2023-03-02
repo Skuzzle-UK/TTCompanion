@@ -23,9 +23,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("races", Name = "Get Races")]
-        public async Task<ActionResult<IEnumerable<RaceOnlyDto>>> GetRacesAsync()
+        public async Task<ActionResult<IEnumerable<RaceOnlyDto>>> GetRacesAsync([FromQuery]string? name, string? searchQuery)
         {
-            var races = await _raceRepository.GetRacesAsync();
+            var races = await _raceRepository.GetRacesAsync(name, searchQuery);
             if(races == null)
             {
                 return NotFound();
