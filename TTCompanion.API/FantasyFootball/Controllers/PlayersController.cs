@@ -29,13 +29,13 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         [HttpGet("players", Name = "Get Players")]
         public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool? withSkills = false)
         {
-            if (raceId.HasValue && !await _raceRepository.RaceExistsAsync(raceId!.Value))
+            if (raceId != null && !await _raceRepository.RaceExistsAsync(raceId!.Value))
             {
                 return NotFound();
             }
 
             var players = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills!.Value);
-            if (players == null)
+            if (players == null || players.Count() <= 0)
             {
                 return NotFound();
             }
@@ -85,7 +85,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         public async Task<ActionResult> UpdatePlayer(int playerId, PlayerForUpdateDto player)
         {
             var playerEntity = await _playerRepository.GetPlayerByIdAsync(playerId);
-            if(playerEntity== null)
+            if(playerEntity == null)
             {
                 return NotFound();
             }

@@ -2,8 +2,7 @@
 {
     public interface ISkillRepository
     {
-        Task<IEnumerable<Entities.Skill>> GetSkillsAsync();
-        Task<IEnumerable<Entities.Skill>> GetSkillsForPlayerAsync(int playerId);
+        Task<IEnumerable<Entities.Skill>> GetSkillsAsync(int? playerId);
         Task<Entities.Skill?> GetSkillByIdAsync(int skillId);
         Task<bool> SkillExistsAsync(int skillId);
         Task AddSkillForPlayerAsync(int playerId, Entities.Skill skill);

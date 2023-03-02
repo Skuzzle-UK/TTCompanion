@@ -16,7 +16,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
         {
             var collection = _context.Players as IQueryable<Entities.Player>;
 
-            if (raceId is not null
+            if (raceId != null
                 && string.IsNullOrEmpty(name)
                 && string.IsNullOrWhiteSpace(searchQuery)
                 && !includeSkills)
@@ -40,7 +40,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
                     .Where(p => EF.Functions.Like(p.Name, searchQuery));
             }
 
-            if (raceId is not null)
+            if (raceId != null)
             {
                 collection = collection
                     .Where(p => p.Races.All(r => r.Id == raceId));  

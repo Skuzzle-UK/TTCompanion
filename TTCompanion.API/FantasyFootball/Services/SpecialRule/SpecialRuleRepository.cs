@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball.DBContexts;
+using TTCompanion.API.FantasyFootball.Entities;
 
 namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
 {
@@ -12,19 +13,18 @@ namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync()
+        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId)
         {
-            return await _context.SpecialRules
-                .OrderBy(sr => sr.Name)
-                .ToListAsync();
-        }
+            var collection = _context.SpecialRules as IQueryable<Entities.SpecialRule>;
 
-        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesForRaceAsync(int raceId)
-        {
-            //@TODO work out how to do this
-            return await _context.SpecialRules
-                .OrderBy(sr => sr.Name)
-                //.Where(sr => sr.Races.Contains(race))
+            if (raceId != null)
+            {
+                collection = collection
+                .Where(s => s.Races.Any(p => p.Id == raceId));
+            }
+            
+            return await collection
+                .OrderBy(s => s.Name)
                 .ToListAsync();
         }
 

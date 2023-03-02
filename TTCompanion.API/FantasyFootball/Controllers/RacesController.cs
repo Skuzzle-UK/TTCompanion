@@ -26,7 +26,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesAsync(string? name, string? searchQuery, bool? includeSpecialRules = false, bool? includePlayers = false)
         {
             var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules!.Value, includePlayers!.Value);
-            if(races == null)
+            if(races == null || races.Count() <= 0)
             {
                 return NotFound();
             }

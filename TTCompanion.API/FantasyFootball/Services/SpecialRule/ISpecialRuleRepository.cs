@@ -2,8 +2,7 @@
 {
     public interface ISpecialRuleRepository
     {
-        Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync();
-        Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesForRaceAsync(int raceId);
+        Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId);
         Task<Entities.SpecialRule?> GetSpecialRuleByIdAsync(int specialRuleId);
         Task<bool> SpecialRuleExistsAsync(int specialRuleId);
         Task AddSpecialRuleForRaceAsync(int raceId, Entities.SpecialRule specialRule);

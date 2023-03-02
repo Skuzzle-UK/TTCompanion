@@ -29,31 +29,13 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("skills", Name = "Get Skills")]
-        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync()
+        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId)
         {
-            var skills = await _skillRepository.GetSkillsAsync();
+            var skills = await _skillRepository.GetSkillsAsync(playerId);
             if (skills == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<IEnumerable<SkillDto>>(skills));
-        }
-
-        [HttpGet("players/{playerId}/skills", Name = "Get Skills For Player")]
-        public async Task<ActionResult<IEnumerable<SkillDto>>> GetSkillsForPlayer(int playerId)
-        {
-            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            var skills = await _skillRepository.GetSkillsForPlayerAsync(playerId);
-            if (skills == null)
-            {
-                return NotFound();
-            }
-
             return Ok(_mapper.Map<IEnumerable<SkillDto>>(skills));
         }
 

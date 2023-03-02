@@ -12,22 +12,17 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Skill>> GetSkillsAsync()
+        public async Task<IEnumerable<Entities.Skill>> GetSkillsAsync(int? playerId)
         {
-            return await _context.Skills
-                .OrderBy(s => s.Name)
-                .ToListAsync();
-        }
+            var collection = _context.Skills as IQueryable<Entities.Skill>;
+            if(playerId != null)
+            {
+                collection = collection
+                .Where(s => s.Players.Any(p => p.Id == playerId));
+            }
 
-        public async Task<IEnumerable<Entities.Skill>> GetSkillsForPlayerAsync(int playerId)
-        {
-            var player = await _context.Players
-                .Where(p => p.Id == playerId)
-                .FirstOrDefaultAsync();
-
-            return await _context.Skills
+            return await collection
                 .OrderBy(s => s.Name)
-                .Where(s => s.Players == player)
                 .ToListAsync();
         }
 

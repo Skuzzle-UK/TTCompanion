@@ -30,28 +30,10 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("specialrules", Name = "Get Special Rules")]
-        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules()
+        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId)
         {
-            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync();
-            if (specialRules == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<IEnumerable<SpecialRuleDto>>(specialRules));
-        }
-
-        [HttpGet("races/{raceId}/specialrules", Name = "Get Special Rules For Race")]
-        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRulesForRace(int raceId)
-        {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId);
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            var specialRules = await _specialRuleRepository.GetSpecialRulesForRaceAsync(raceId);
-            if (specialRules == null)
+            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId);
+            if (specialRules.Count() <= 0)
             {
                 return NotFound();
             }
