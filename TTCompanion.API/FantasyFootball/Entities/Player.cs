@@ -19,7 +19,7 @@ namespace TTCompanion.API.FantasyFootball.Entities
         public int? Cost { get; set; }
         public ICollection<Skill> Skills { get; set; } = new List<Skill>();
         public bool Modifiable { get; } = true;
-        
+
         public ICollection<Race> Races { get; set; } = new List<Race>();
 
 

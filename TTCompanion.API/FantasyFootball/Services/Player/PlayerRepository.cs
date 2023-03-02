@@ -13,10 +13,11 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
         }
 
         public async Task<IEnumerable<Entities.Player>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool includeSkills = false)
-        {           
+        {
             var collection = _context.Players as IQueryable<Entities.Player>;
 
-            if (string.IsNullOrEmpty(name)
+            if (raceId is not null
+                && string.IsNullOrEmpty(name)
                 && string.IsNullOrWhiteSpace(searchQuery)
                 && !includeSkills)
             {
@@ -39,10 +40,10 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
                     .Where(p => EF.Functions.Like(p.Name, searchQuery));
             }
 
-            if(raceId.HasValue)
+            if (raceId is not null)
             {
-                //collection = collection
-                //    .Where(p => p.Races.Contains == raceId);
+                collection = collection
+                    .Where(p => p.Races.All(r => r.Id == raceId));  
             }
 
             if (includeSkills)
@@ -52,7 +53,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
             }
 
             return await collection
-                .OrderBy(r => r.Name)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
