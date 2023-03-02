@@ -23,43 +23,10 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("races", Name = "Get Races")]
-        public async Task<ActionResult<IEnumerable<RaceOnlyDto>>> GetRacesAsync([FromQuery]string? name, string? searchQuery)
+        public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesAsync(string? name, string? searchQuery, bool? includeSpecialRules = false, bool? includePlayers = false)
         {
-            var races = await _raceRepository.GetRacesAsync(name, searchQuery);
+            var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules!.Value, includePlayers!.Value);
             if(races == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<IEnumerable<RaceOnlyDto>>(races));
-        }
-
-        [HttpGet("races/includeplayers", Name = "Get Races With Players")]
-        public async Task<ActionResult<IEnumerable<RaceWithoutSpecialRulesDto>>> GetRacesWithPlayersAsync()
-        {
-            var races = await _raceRepository.GetRacesAsync(false, true);
-            if (races == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<IEnumerable<RaceWithoutSpecialRulesDto>>(races));
-        }
-
-        [HttpGet("races/includespecialrules", Name = "Get Races With Special Rules")]
-        public async Task<ActionResult<IEnumerable<RaceWithoutPlayersDto>>> GetRacesWithSpecialRulesAsync()
-        {
-            var races = await _raceRepository.GetRacesAsync(true, false);
-            if (races == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<IEnumerable<RaceWithoutPlayersDto>>(races));
-        }
-
-        [HttpGet("races/includeall", Name = "Get Races With All")]
-        public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesWithAllAsync()
-        {
-            var races = await _raceRepository.GetRacesAsync(true, true);
-            if (races == null)
             {
                 return NotFound();
             }
@@ -67,45 +34,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("races/{raceId}", Name = "Get Race By Id")]
-        public async Task<ActionResult<RaceOnlyDto>> GetRaceByIdAsync(int raceId)
+        public async Task<ActionResult<RaceDto>> GetRaceByIdAsync(int raceId, bool? includeSpecialRules = false, bool? includePlayers = false)
         {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId);
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<RaceOnlyDto>(race));
-        }
-
-        [HttpGet("races/{raceId}/includeplayers", Name = "Get Race With Players By Id")]
-        public async Task<ActionResult<RaceWithoutSpecialRulesDto>> GetRaceWithPlayersByIdAsync(int raceId)
-        {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId, false, true);
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<RaceWithoutSpecialRulesDto>(race));
-        }
-
-        [HttpGet("races/{raceId}/includespecialrules", Name = "Get Race With Special Rules By Id")]
-        public async Task<ActionResult<RaceWithoutPlayersDto>> GetRaceWithSpecialRulesByIdAsync(int raceId)
-        {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId, true, false);
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<RaceWithoutPlayersDto>(race));
-        }
-
-        [HttpGet("races/{raceId}/includeall", Name = "Get Race With All By Id")]
-        public async Task<ActionResult<RaceDto>> GetRaceWithAllByIdAsync(int raceId)
-        {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId, true, true);
+            var race = await _raceRepository.GetRaceByIdAsync(raceId, includeSpecialRules!.Value, includePlayers!.Value);
             if (race == null)
             {
                 return NotFound();

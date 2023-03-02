@@ -8,10 +8,6 @@ namespace TTCompanion.API.FantasyFootball.Profiles
         public RaceProfile()
         {
             CreateMap<Entities.Race, RaceDto>();
-            CreateMap<Entities.Race, RaceOnlyDto>();
-            CreateMap<Entities.Race, RaceWithoutPlayersDto>();
-            CreateMap<Entities.Race, RaceWithoutSpecialRulesDto>();
-
             CreateMap<Entities.Race, RaceForUpdateDto>();
             CreateMap<RaceForUpdateDto, Entities.Race>();
         }

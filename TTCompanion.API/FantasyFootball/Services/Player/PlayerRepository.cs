@@ -12,51 +12,60 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Player>> GetPlayersAsync(bool includeSkills)
-        {
-            if (includeSkills)
+        public async Task<IEnumerable<Entities.Player>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool includeSkills = false)
+        {           
+            var collection = _context.Players as IQueryable<Entities.Player>;
+
+            if (string.IsNullOrEmpty(name)
+                && string.IsNullOrWhiteSpace(searchQuery)
+                && !includeSkills)
             {
-                return await _context.Players
-                    .OrderBy(p => p.Name)
-                    .Include(p => p.Skills)
-                    .ToListAsync();
+                return await collection
+                .OrderBy(p => p.Name)
+                .ToListAsync();
             }
 
-            return await _context.Players
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.Trim();
+                collection = collection.Where(p => p.Name == name);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim();
+                searchQuery = $"%{searchQuery}%";
+                collection = collection
+                    .Where(p => EF.Functions.Like(p.Name, searchQuery));
+            }
+
+            if(raceId.HasValue)
+            {
+                //collection = collection
+                //    .Where(p => p.Races.Contains == raceId);
+            }
+
+            if (includeSkills)
+            {
+                collection = collection
+                    .Include(p => p.Skills);
+            }
+
+            return await collection
                 .OrderBy(r => r.Name)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Entities.Player>> GetPlayersForRaceAsync(int raceId, bool includeSkills)
+        public async Task<Entities.Player?> GetPlayerByIdAsync(int playerId, bool includeSkills = false)
         {
-            //@TODO work out how to do this
+            var collection = _context.Players as IQueryable<Entities.Player>;
             if (includeSkills)
             {
-                return await _context.Players
-                    .OrderBy(p => p.Name)
-                    .Include(p => p.Skills)
-                    //.Where(p => p.RacesId == raceId)
-                    .ToListAsync();
+                collection = collection
+                    .Include(p => p.Skills);
             }
 
-            return await _context.Players
-                .OrderBy(p => p.Name)
-                //.Where(p => p.RacesId == raceId)
-                .ToListAsync();
-        }
-
-        public async Task<Entities.Player?> GetPlayerByIdAsync(int playerId, bool includeSkills)
-        {
-            if (includeSkills)
-            {
-                return await _context.Players
-                    .OrderBy(p => p.Name)
-                    .Include(p => p.Skills)
-                    .Where(p => p.Id == playerId)
-                    .FirstOrDefaultAsync();
-            }
-
-            return await _context.Players
+            return await collection
                 .OrderBy(p => p.Name)
                 .Where(p => p.Id == playerId)
                 .FirstOrDefaultAsync();

@@ -27,55 +27,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("players", Name = "Get Players")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync()
+        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool? withSkills = false)
         {
-            var players = await _playerRepository.GetPlayersAsync();
-            if (players == null)
+            if (raceId.HasValue && !await _raceRepository.RaceExistsAsync(raceId!.Value))
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<IEnumerable<PlayerWithoutSkillsDto>>(players));
-        }
-
-        [HttpGet("players/includeskills", Name = "Get Players With Skills")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersWithSkillsAsync()
-        {
-            var players = await _playerRepository.GetPlayersAsync(true);
-            if (players == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<IEnumerable<PlayerDto>>(players));
-        }
-
-        [HttpGet("race/{raceId}/players", Name = "Get Players For Race")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersForRaceAsync(int raceId)
-        {
-            if(!await _raceRepository.RaceExistsAsync(raceId))
-            {
-                return NotFound();
-            }
-
-            var players = await _playerRepository.GetPlayersForRaceAsync(raceId);
-            if(players == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<IEnumerable<PlayerWithoutSkillsDto>>(players));
-        }
-
-        [HttpGet("race/{raceId}/players/includeskills", Name = "Get Players With Skills For Race")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersWithSkillsForRaceAsync(int raceId)
-        {
-            if (!await _raceRepository.RaceExistsAsync(raceId))
-            {
-                return NotFound();
-            }
-
-            var players = await _playerRepository.GetPlayersForRaceAsync(raceId, true);
+            var players = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills!.Value);
             if (players == null)
             {
                 return NotFound();
@@ -85,27 +44,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("players/{playerId}", Name = "Get Player By Id")]
-        public async Task<ActionResult<PlayerDto>> GetPlayerByIdAsync(int playerId)
+        public async Task<ActionResult<PlayerDto>> GetPlayerByIdAsync(int playerId, bool? withSkills = false)
         {
             if (!await _playerRepository.PlayerExistsAsync(playerId))
             {
                 return NotFound();
             }
 
-            var player = await _playerRepository.GetPlayerByIdAsync(playerId);
-
-            return Ok(_mapper.Map<PlayerWithoutSkillsDto>(player));
-        }
-
-        [HttpGet("players/{playerId}/includeskills", Name = "Get Player With Skills By Id")]
-        public async Task<ActionResult<PlayerDto>> GetPlayerWithSkillsByIdAsync(int playerId)
-        {
-            if (!await _playerRepository.PlayerExistsAsync(playerId))
-            {
-                return NotFound();
-            }
-
-            var player = await _playerRepository.GetPlayerByIdAsync(playerId, true);
+            var player = await _playerRepository.GetPlayerByIdAsync(playerId, withSkills!.Value);
 
             return Ok(_mapper.Map<PlayerDto>(player));
         }

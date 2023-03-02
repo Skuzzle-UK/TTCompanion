@@ -2,8 +2,6 @@
 {
     public interface IRaceRepository
     {
-        Task<IEnumerable<Entities.Race>> GetRacesAsync();
-        Task<IEnumerable<Entities.Race>> GetRacesAsync(bool includeSpecialRules = false, bool includePlayers = false);
         Task<IEnumerable<Entities.Race>> GetRacesAsync(string? name, string? searchQuery, bool includeSpecialRules = false, bool includePlayers = false);
         Task<Entities.Race?> GetRaceByIdAsync(int raceId, bool includeSpecialRules = false, bool includePlayers = false);
         Task<bool> RaceExistsAsync(int raceId);
