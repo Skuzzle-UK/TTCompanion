@@ -37,7 +37,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             }
 
             var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules, includePlayers, pageNumber, pageSize);
-            if (races == null races.Count() <= 0)
+            if (races == null || races.Count() <= 0)
             {
                 return NotFound();
             }
