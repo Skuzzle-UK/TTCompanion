@@ -13,7 +13,7 @@ namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId)
+        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId, int pageNumber = 1, int pageSize = 30)
         {
             var collection = _context.SpecialRules as IQueryable<Entities.SpecialRule>;
 
@@ -25,6 +25,8 @@ namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
             
             return await collection
                 .OrderBy(s => s.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
                 .ToListAsync();
         }
 

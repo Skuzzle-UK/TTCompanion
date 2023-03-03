@@ -19,6 +19,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         private readonly ISkillRepository _skillRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IMapper _mapper;
+        const int maxSkillsPageSize = 100;
 
         public SkillsController(IRepository repository, ISkillRepository skillRepository, IPlayerRepository playerRepository, IMapper mapper)
         {
@@ -29,9 +30,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("skills", Name = "Get Skills")]
-        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId)
+        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId, int pageNumber = 1, int pageSize = 30)
         {
-            var skills = await _skillRepository.GetSkillsAsync(playerId);
+            if(pageSize > maxSkillsPageSize)
+            {
+                pageSize= maxSkillsPageSize;
+            }
+
+            var skills = await _skillRepository.GetSkillsAsync(playerId, pageNumber, pageSize);
             if (skills == null)
             {
                 return NotFound();

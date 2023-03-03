@@ -17,7 +17,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         private readonly IPlayerRepository _playerRepository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
-        const int maxRacesPageSize = 100;
+        const int maxPlayersPageSize = 100;
 
         public PlayersController(IRepository repository, IPlayerRepository playerRepository, IRaceRepository raceRepository, IMapper mapper)
         {
@@ -30,9 +30,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         [HttpGet("players", Name = "Get Players")]
         public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool withSkills = false, int pageNumber = 1, int pageSize = 30)
         {
-            if(pageSize > maxRacesPageSize)
+            if(pageSize > maxPlayersPageSize)
             {
-                pageSize = maxRacesPageSize;
+                pageSize = maxPlayersPageSize;
             }
 
             if (raceId != null && !await _raceRepository.RaceExistsAsync(raceId!.Value))

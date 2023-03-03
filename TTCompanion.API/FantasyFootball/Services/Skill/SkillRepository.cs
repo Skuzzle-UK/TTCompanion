@@ -12,7 +12,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Skill>> GetSkillsAsync(int? playerId)
+        public async Task<IEnumerable<Entities.Skill>> GetSkillsAsync(int? playerId, int pageNumber = 1, int pageSize = 30)
         {
             var collection = _context.Skills as IQueryable<Entities.Skill>;
             if(playerId != null)
@@ -23,6 +23,8 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
 
             return await collection
                 .OrderBy(s => s.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
                 .ToListAsync();
         }
 

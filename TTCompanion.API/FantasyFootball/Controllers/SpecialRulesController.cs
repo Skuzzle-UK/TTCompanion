@@ -20,6 +20,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         private readonly ISpecialRuleRepository _specialRuleRepository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
+        const int maxSpecialRulesPageSize = 100;
 
         public SpecialRulesController(IRepository repository, ISpecialRuleRepository specialRuleRepository, IRaceRepository raceRepository, IMapper mapper)
         {
@@ -30,9 +31,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("specialrules", Name = "Get Special Rules")]
-        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId)
+        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId, int pageNumber = 1, int pageSize = 30)
         {
-            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId);
+            if(pageSize > maxSpecialRulesPageSize)
+            {
+                pageSize = maxSpecialRulesPageSize;
+            }
+
+            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId, pageNumber, pageSize);
             if (specialRules == null || specialRules.Count() <= 0)
             {
                 return NotFound();
