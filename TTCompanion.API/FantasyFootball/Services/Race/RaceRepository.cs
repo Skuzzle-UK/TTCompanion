@@ -12,7 +12,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Race>> GetRacesAsync(string? name, string? searchQuery, bool includeSpecialRules = false, bool includePlayers = false, int pageNumber = 1, int pageSize = 30)
+        public async Task<(IEnumerable<Entities.Race>, PaginationMetadata)> GetRacesAsync(string? name, string? searchQuery, bool includeSpecialRules = false, bool includePlayers = false, int pageSize = 30, int pageNumber = 1)
         {
             var collection = _context.Races as IQueryable<Entities.Race>;
 
@@ -43,11 +43,17 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
                     .ThenInclude(p => p.Skills);
             }
 
-            return await collection
+            var totalItemCount = await collection.CountAsync();
+
+            var paginationMetaData = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+            var collectionToReturn  = await collection
                 .OrderBy(r => r.Name)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
+
+            return (collectionToReturn, paginationMetaData);
         }
 
         public async Task<Entities.Race?> GetRaceByIdAsync(int raceId, bool includeSpecialRules = false, bool includePlayers = false)

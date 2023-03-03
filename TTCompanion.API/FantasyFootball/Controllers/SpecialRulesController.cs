@@ -7,8 +7,8 @@ using TTCompanion.API.FantasyFootball.Services.Player;
 using TTCompanion.API.FantasyFootball.Services.Race;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.SpecialRule;
-using System.Diagnostics;
 using Microsoft.AspNetCore.JsonPatch;
+using System.Text.Json;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
@@ -31,18 +31,20 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("specialrules", Name = "Get Special Rules")]
-        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId, string? name, string? searchQuery, int pageNumber = 1, int pageSize = 30)
+        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId, string? name, string? searchQuery, int pageSize = 30, int pageNumber = 1)
         {
             if(pageSize > maxSpecialRulesPageSize)
             {
                 pageSize = maxSpecialRulesPageSize;
             }
 
-            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
+            var (specialRules, paginationMetadata) = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
             if (specialRules == null || specialRules.Count() <= 0)
             {
                 return NotFound();
             }
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             return Ok(_mapper.Map<IEnumerable<SpecialRuleDto>>(specialRules));
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
 using TTCompanion.API.FantasyFootball.Models.Player;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
@@ -28,7 +29,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("players", Name = "Get Players")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool withSkills = false, int pageNumber = 1, int pageSize = 30)
+        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool withSkills = false, int pageSize = 30, int pageNumber = 1)
         {
             if(pageSize > maxPlayersPageSize)
             {
@@ -40,7 +41,9 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound();
             }
 
-            var players = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageNumber, pageSize);
+            var (players, paginationMetadata) = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             if (withSkills)
             {

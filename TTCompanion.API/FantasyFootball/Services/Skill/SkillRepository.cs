@@ -12,7 +12,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Skill>> GetSkillsAsync(int? playerId, string? name, string? searchQuery, int pageNumber = 1, int pageSize = 30)
+        public async Task<(IEnumerable<Entities.Skill>, PaginationMetadata)> GetSkillsAsync(int? playerId, string? name, string? searchQuery, int pageSize = 30, int pageNumber = 1)
         {
             var collection = _context.Skills as IQueryable<Entities.Skill>;
 
@@ -36,11 +36,17 @@ namespace TTCompanion.API.FantasyFootball.Services.Skill
                 .Where(s => s.Players.Any(p => p.Id == playerId));
             }
 
-            return await collection
+            var totalItemCount = await collection.CountAsync();
+
+            var paginationMetaData = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+            var collectionToReturn = await collection
                 .OrderBy(s => s.Name)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
+
+            return (collectionToReturn, paginationMetaData);
         }
 
         public async Task<Entities.Skill?> GetSkillByIdAsync(int skillId)

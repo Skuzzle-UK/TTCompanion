@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TTCompanion.API.FantasyFootball.Models.Race;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Race;
@@ -28,7 +29,8 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             string? name, string? searchQuery,
             bool includeSpecialRules = false,
             bool includePlayers = false,
-            int pageNumber = 1, int pageSize = 30
+            int pageSize = 30,
+            int pageNumber = 1
             )
         {
             if (pageSize > maxRacesPageSize)
@@ -36,12 +38,15 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 pageSize = maxRacesPageSize;
             }
 
-            var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules, includePlayers, pageNumber, pageSize);
+            var (races, paginationMetadata) = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules, includePlayers, pageSize, pageNumber);
+
             if (races == null || races.Count() <= 0)
             {
                 return NotFound();
             }
-            
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+
             if (!includeSpecialRules && !includePlayers)
             {
                 return Ok(_mapper.Map<IEnumerable<RaceOnlyDto>>(races));
