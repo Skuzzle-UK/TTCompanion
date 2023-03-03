@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -9,6 +10,7 @@ using TTCompanion.API.FantasyFootball.Services.Race;
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("ttcompanion.api/fantasyfootball")]
     public class RacesController : ControllerBase
     {

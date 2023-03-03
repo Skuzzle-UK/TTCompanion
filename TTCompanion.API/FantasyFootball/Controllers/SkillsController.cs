@@ -9,10 +9,12 @@ using TTCompanion.API.FantasyFootball.Models.SpecialRule;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Text.Json;
 using TTCompanion.API.FantasyFootball.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [Route("ttcompanion.api/fantasyfootball")]
+    [Authorize]
     [ApiController]
     public class SkillsController : ControllerBase
     {

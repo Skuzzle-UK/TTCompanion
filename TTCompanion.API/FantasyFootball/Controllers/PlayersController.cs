@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
-using TTCompanion.API.FantasyFootball.Entities;
 using TTCompanion.API.FantasyFootball.Models.Player;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
@@ -12,6 +11,7 @@ using TTCompanion.API.FantasyFootball.Services.Race;
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("ttcompanion.api/fantasyfootball")]
     public class PlayersController : ControllerBase
     {
@@ -42,7 +42,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound($"raceId: {raceId} does not exist.");
             }
 
-            var (players, paginationMetadata) = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageNumber, pageSize);
+            var (players, paginationMetadata) = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageSize, pageNumber);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 

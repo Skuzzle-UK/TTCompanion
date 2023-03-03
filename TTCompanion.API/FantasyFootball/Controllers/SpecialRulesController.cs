@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -10,6 +11,7 @@ using TTCompanion.API.FantasyFootball.Services.SpecialRule;
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [Route("ttcompanion.api/fantasyfootball")]
+    [Authorize]
     [ApiController]
     public class SpecialRulesController : ControllerBase
     {
