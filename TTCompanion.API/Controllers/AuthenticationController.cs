@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace TTCompanion.API.FantasyFootball.Controllers
+namespace TTCompanion.API.Controllers
 {
     [Route("ttcompanion.api/fantasyfootball/authentication")]
     [ApiController]
@@ -27,10 +27,10 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             public FFInfoUser(int userId, string userName, string firstName, string lastName, string emailAddress)
             {
                 UserId = userId;
-                Username= userName;
-                FirstName= firstName;
-                LastName= lastName;
-                Email= emailAddress;
+                Username = userName;
+                FirstName = firstName;
+                LastName = lastName;
+                Email = emailAddress;
             }
         }
 
