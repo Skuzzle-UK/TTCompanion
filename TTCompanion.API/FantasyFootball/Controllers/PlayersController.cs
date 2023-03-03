@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
+using TTCompanion.API.FantasyFootball.Entities;
 using TTCompanion.API.FantasyFootball.Models.Player;
 using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
@@ -38,7 +39,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 
             if (raceId != null && !await _raceRepository.RaceExistsAsync(raceId!.Value))
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist.");
             }
 
             var (players, paginationMetadata) = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageNumber, pageSize);
@@ -58,7 +59,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         {
             if (!await _playerRepository.PlayerExistsAsync(playerId))
             {
-                return NotFound();
+                return NotFound($"playerId: {playerId} does not exist.");
             }
 
             var player = await _playerRepository.GetPlayerByIdAsync(playerId, withSkills!.Value);
@@ -97,12 +98,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var playerEntity = await _playerRepository.GetPlayerByIdAsync(playerId);
             if(playerEntity == null)
             {
-                return NotFound();
+                return NotFound($"playerId: {playerId} does not exist.");
             }
 
             if (!playerEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"playerId: {playerId} can not be modified.");
             }
 
             _mapper.Map(player, playerEntity);
@@ -117,12 +118,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var playerEntity = await _playerRepository.GetPlayerByIdAsync(playerId);
             if (playerEntity == null)
             {
-                return NotFound();
+                return NotFound($"playerId: {playerId} does not exist.");
             }
 
             if (!playerEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"playerId: {playerId} can not be modified.");
             }
 
             var playerToPatch = _mapper.Map<PlayerForUpdateDto>(playerEntity);
@@ -153,11 +154,11 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var playerEntity = await _playerRepository.GetPlayerByIdAsync(playerId);
             if (playerEntity == null)
             {
-                return NotFound();
+                return NotFound($"playerId: {playerId} does not exist.");
             }
             if(!playerEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"playerId: {playerId} can not be modified.");
             }
 
             _playerRepository.DeletePlayer(playerEntity);

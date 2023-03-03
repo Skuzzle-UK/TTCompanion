@@ -40,11 +40,6 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 
             var (races, paginationMetadata) = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules, includePlayers, pageSize, pageNumber);
 
-            if (races == null || races.Count() <= 0)
-            {
-                return NotFound();
-            }
-
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             if (!includeSpecialRules && !includePlayers)
@@ -69,7 +64,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var race = await _raceRepository.GetRaceByIdAsync(raceId, includeSpecialRules, includePlayers);
             if (race == null)
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist.");
             }
 
             return Ok(_mapper.Map<RaceDto>(race));
@@ -98,12 +93,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var raceEntity = await _raceRepository.GetRaceByIdAsync(raceId);
             if (raceEntity == null)
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist.");
             }
 
             if (!raceEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"raceId: {raceId} can not be modified");
             }
 
             _mapper.Map(race, raceEntity);
@@ -118,12 +113,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var raceEntity = await _raceRepository.GetRaceByIdAsync(raceId);
             if (raceEntity == null)
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist.");
             }
 
             if (!raceEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"raceId: {raceId} can not be modified");
             }
 
             var raceToPatch = _mapper.Map<RaceForUpdateDto>(raceEntity);
@@ -154,12 +149,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var raceEntity = await _raceRepository.GetRaceByIdAsync(raceId);
             if (raceEntity == null)
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist.");
             }
 
             if (!raceEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"raceId: {raceId} can not be modified");
             }
 
             _raceRepository.DeleteRace(raceEntity);

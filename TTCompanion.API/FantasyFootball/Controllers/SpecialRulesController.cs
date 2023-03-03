@@ -35,11 +35,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 pageSize = maxSpecialRulesPageSize;
             }
 
-            var (specialRules, paginationMetadata) = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
-            if (specialRules == null || specialRules.Count() <= 0)
+            if (raceId != null && !await _raceRepository.RaceExistsAsync(raceId!.Value))
             {
-                return NotFound();
+                return NotFound($"raceId: {raceId} does not exist");
             }
+
+            var (specialRules, paginationMetadata) = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
@@ -52,7 +53,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var specialRule = await _specialRuleRepository.GetSpecialRuleByIdAsync(specialRuleId);
             if (specialRule == null)
             {
-                return NotFound();
+                return NotFound($"specialRuleId: {specialRuleId} does not exist");
             }
 
             return Ok(_mapper.Map<SpecialRuleDto>(specialRule));
@@ -64,12 +65,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var specialRuleEntity = await _specialRuleRepository.GetSpecialRuleByIdAsync(specialRuleId);
             if (specialRuleEntity == null)
             {
-                return NotFound();
+                return NotFound($"specialRuleId: {specialRuleId} does not exist");
             }
 
             if (!specialRuleEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"specialRuleId: {specialRuleId} can not be modified");
             }
 
             _mapper.Map(specialRule, specialRuleEntity);
@@ -84,12 +85,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var specialRuleEntity = await _specialRuleRepository.GetSpecialRuleByIdAsync(specialRuleId);
             if (specialRuleEntity == null)
             {
-                return NotFound();
+                return NotFound($"specialRuleId: {specialRuleId} does not exist");
             }
 
             if (!specialRuleEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"specialRuleId: {specialRuleId} can not be modified");
             }
 
             var specialRuleToPatch = _mapper.Map<SpecialRuleForUpdateDto>(specialRuleEntity);
@@ -119,12 +120,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var specialRuleEntity = await _specialRuleRepository.GetSpecialRuleByIdAsync(specialRuleId);
             if (specialRuleEntity == null)
             {
-                return NotFound();
+                return NotFound($"specialRuleId: {specialRuleId} does not exist");
             }
 
             if (!specialRuleEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"specialRuleId: {specialRuleId} can not be modified");
             }
 
             _specialRuleRepository.DeleteSpecialRule(specialRuleEntity);

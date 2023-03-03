@@ -8,6 +8,7 @@ using TTCompanion.API.FantasyFootball.Models.Skill;
 using TTCompanion.API.FantasyFootball.Models.SpecialRule;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Text.Json;
+using TTCompanion.API.FantasyFootball.Entities;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
@@ -30,18 +31,19 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("skills", Name = "Get Skills")]
-        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId, string? name, string? searchQuery, int pageSize = 30, int pageNumber = 1)
+        public async Task<ActionResult<IEnumerable<SkillDto>>> GetSkillsAsync(int? playerId, string? name, string? searchQuery, int pageSize = 30, int pageNumber = 1)
         {
             if(pageSize > maxSkillsPageSize)
             {
                 pageSize= maxSkillsPageSize;
             }
 
-            var (skills, paginationMetadata) = await _skillRepository.GetSkillsAsync(playerId, name, searchQuery, pageNumber, pageSize);
-            if (skills == null)
+            if (playerId != null && !await _playerRepository.PlayerExistsAsync(playerId!.Value))
             {
-                return NotFound();
+                return NotFound($"playerId: {playerId} does not exist.");
             }
+
+            var (skills, paginationMetadata) = await _skillRepository.GetSkillsAsync(playerId, name, searchQuery, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
@@ -54,7 +56,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var skill = await _skillRepository.GetSkillByIdAsync(skillId);
             if (skill == null)
             {
-                return NotFound();
+                return NotFound($"skillId: {skillId} does not exist.");
             }
 
             return Ok(_mapper.Map<SkillDto>(skill));
@@ -66,12 +68,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var skillEntity = await _skillRepository.GetSkillByIdAsync(skillId);
             if (skillEntity == null)
             {
-                return NotFound();
+                return NotFound($"skillId: {skillId} does not exist.");
             }
 
             if (!skillEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"skillId: {skillId} can not be modified.");
             }
 
             _mapper.Map(skill, skillEntity);
@@ -86,12 +88,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var skillEntity = await _skillRepository.GetSkillByIdAsync(skillId);
             if (skillEntity == null)
             {
-                return NotFound();
+                return NotFound($"skillId: {skillId} does not exist.");
             }
 
             if (!skillEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"skillId: {skillId} can not be modified.");
             }
 
             var skillToPatch = _mapper.Map<SkillForUpdateDto>(skillEntity);
@@ -122,12 +124,12 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             var skillEntity = await _skillRepository.GetSkillByIdAsync(skillId);
             if (skillEntity == null)
             {
-                return NotFound();
+                return NotFound($"skillId: {skillId} does not exist.");
             }
 
             if (!skillEntity.Modifiable)
             {
-                return Unauthorized();
+                return Unauthorized($"skillId: {skillId} can not be modified.");
             }
 
             _skillRepository.DeleteSkill(skillEntity);
