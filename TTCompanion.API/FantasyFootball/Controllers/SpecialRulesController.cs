@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TTCompanion.API.FantasyFootball.Models.Player;
-using TTCompanion.API.FantasyFootball.Models.SpecialRule;
-using TTCompanion.API.FantasyFootball.Services.Player;
-using TTCompanion.API.FantasyFootball.Services.Race;
-using TTCompanion.API.FantasyFootball.Services;
-using TTCompanion.API.FantasyFootball.Services.SpecialRule;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using TTCompanion.API.FantasyFootball.Models.SpecialRule;
+using TTCompanion.API.FantasyFootball.Services;
+using TTCompanion.API.FantasyFootball.Services.Race;
+using TTCompanion.API.FantasyFootball.Services.SpecialRule;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
