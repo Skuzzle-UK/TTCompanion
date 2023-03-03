@@ -33,7 +33,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId)
         {
             var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId);
-            if (specialRules.Count() <= 0)
+            if (specialRules == null || specialRules.Count() <= 0)
             {
                 return NotFound();
             }

@@ -14,6 +14,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         private readonly IRepository _repository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
+        const int maxRacesPageSize = 100;
 
         public RacesController(IRepository repository, IRaceRepository raceRepository, IMapper mapper)
         {
@@ -23,20 +24,44 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("races", Name = "Get Races")]
-        public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesAsync(string? name, string? searchQuery, bool? includeSpecialRules = false, bool? includePlayers = false)
+        public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesAsync(
+            string? name, string? searchQuery,
+            bool includeSpecialRules = false,
+            bool includePlayers = false,
+            int pageNumber = 1, int pageSize = 30
+            )
         {
-            var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules!.Value, includePlayers!.Value);
-            if(races == null || races.Count() <= 0)
+            if (pageSize > maxRacesPageSize)
+            {
+                pageSize = maxRacesPageSize;
+            }
+
+            var races = await _raceRepository.GetRacesAsync(name, searchQuery, includeSpecialRules, includePlayers, pageNumber, pageSize);
+            if (races == null races.Count() <= 0)
             {
                 return NotFound();
             }
+            
+            if (!includeSpecialRules && !includePlayers)
+            {
+                return Ok(_mapper.Map<IEnumerable<RaceOnlyDto>>(races));
+            }
+            if (includeSpecialRules && !includePlayers)
+            {
+                return Ok(_mapper.Map<IEnumerable<RaceWithSpecialRulesDto>>(races));
+            }
+            if (!includeSpecialRules && includePlayers)
+            {
+                return Ok(_mapper.Map<IEnumerable<RaceWithPlayersDto>>(races));
+            }
+
             return Ok(_mapper.Map<IEnumerable<RaceDto>>(races));
         }
 
         [HttpGet("races/{raceId}", Name = "Get Race By Id")]
-        public async Task<ActionResult<RaceDto>> GetRaceByIdAsync(int raceId, bool? includeSpecialRules = false, bool? includePlayers = false)
+        public async Task<ActionResult<RaceDto>> GetRaceByIdAsync(int raceId, bool includeSpecialRules = false, bool includePlayers = false)
         {
-            var race = await _raceRepository.GetRaceByIdAsync(raceId, includeSpecialRules!.Value, includePlayers!.Value);
+            var race = await _raceRepository.GetRaceByIdAsync(raceId, includeSpecialRules, includePlayers);
             if (race == null)
             {
                 return NotFound();

@@ -12,7 +12,7 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Race>> GetRacesAsync(string? name, string? searchQuery, bool includeSpecialRules = false, bool includePlayers = false)
+        public async Task<IEnumerable<Entities.Race>> GetRacesAsync(string? name, string? searchQuery, bool includeSpecialRules = false, bool includePlayers = false, int pageNumber = 1, int pageSize = 30)
         {
             var collection = _context.Races as IQueryable<Entities.Race>;
 
@@ -45,6 +45,8 @@ namespace TTCompanion.API.FantasyFootball.Services.Race
 
             return await collection
                 .OrderBy(r => r.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
                 .ToListAsync();
         }
 
