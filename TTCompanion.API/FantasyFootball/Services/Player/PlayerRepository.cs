@@ -12,19 +12,9 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.Player>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool includeSkills = false)
+        public async Task<IEnumerable<Entities.Player>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool includeSkills = false, int pageNumber = 1, int pageSize = 30)
         {
             var collection = _context.Players as IQueryable<Entities.Player>;
-
-            if (raceId != null
-                && string.IsNullOrEmpty(name)
-                && string.IsNullOrWhiteSpace(searchQuery)
-                && !includeSkills)
-            {
-                return await collection
-                .OrderBy(p => p.Name)
-                .ToListAsync();
-            }
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -54,6 +44,8 @@ namespace TTCompanion.API.FantasyFootball.Services.Player
 
             return await collection
                 .OrderBy(p => p.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
                 .ToListAsync();
         }
 

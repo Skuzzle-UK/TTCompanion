@@ -8,6 +8,7 @@ namespace TTCompanion.API.FantasyFootball.Profiles
         public PlayerProfile()
         {
             CreateMap<Entities.Player, PlayerDto>();
+            CreateMap<Entities.Player, PlayerOnlyDto>();
             CreateMap<Entities.Player, PlayerForUpdateDto>();
             CreateMap<PlayerForUpdateDto, Entities.Player>();
         }

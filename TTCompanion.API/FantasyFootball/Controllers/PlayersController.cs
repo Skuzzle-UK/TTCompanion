@@ -17,6 +17,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         private readonly IPlayerRepository _playerRepository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
+        const int maxRacesPageSize = 100;
 
         public PlayersController(IRepository repository, IPlayerRepository playerRepository, IRaceRepository raceRepository, IMapper mapper)
         {
@@ -27,20 +28,26 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("players", Name = "Get Players")]
-        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool? withSkills = false)
+        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayersAsync(int? raceId, string? name, string? searchQuery, bool withSkills = false, int pageNumber = 1, int pageSize = 30)
         {
+            if(pageSize > maxRacesPageSize)
+            {
+                pageSize = maxRacesPageSize;
+            }
+
             if (raceId != null && !await _raceRepository.RaceExistsAsync(raceId!.Value))
             {
                 return NotFound();
             }
 
-            var players = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills!.Value);
-            if (players == null || players.Count() <= 0)
+            var players = await _playerRepository.GetPlayersAsync(raceId, name, searchQuery, withSkills, pageNumber, pageSize);
+
+            if (withSkills)
             {
-                return NotFound();
+                return Ok(_mapper.Map<IEnumerable<PlayerDto>>(players));
             }
 
-            return Ok(_mapper.Map<IEnumerable<PlayerDto>>(players));
+            return Ok(_mapper.Map<IEnumerable<PlayerOnlyDto>>(players));
         }
 
         [HttpGet("players/{playerId}", Name = "Get Player By Id")]
