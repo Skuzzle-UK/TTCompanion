@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TTCompanion.API.FantasyFootball.DBContexts;
-using TTCompanion.API.FantasyFootball.Entities;
 
 namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
 {
@@ -13,9 +12,23 @@ namespace TTCompanion.API.FantasyFootball.Services.SpecialRule
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId, int pageNumber = 1, int pageSize = 30)
+        public async Task<IEnumerable<Entities.SpecialRule>> GetSpecialRulesAsync(int? raceId, string? name, string? searchQuery, int pageNumber = 1, int pageSize = 30)
         {
             var collection = _context.SpecialRules as IQueryable<Entities.SpecialRule>;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.Trim();
+                collection = collection.Where(sr => sr.Name == name);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim();
+                searchQuery = $"%{searchQuery}%";
+                collection = collection
+                    .Where(sr => EF.Functions.Like(sr.Name, searchQuery));
+            }
 
             if (raceId != null)
             {

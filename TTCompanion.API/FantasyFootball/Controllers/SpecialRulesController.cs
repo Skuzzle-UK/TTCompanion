@@ -31,14 +31,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("specialrules", Name = "Get Special Rules")]
-        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId, int pageNumber = 1, int pageSize = 30)
+        public async Task<ActionResult<IEnumerable<SpecialRuleDto>>> GetSpecialRules(int? raceId, string? name, string? searchQuery, int pageNumber = 1, int pageSize = 30)
         {
             if(pageSize > maxSpecialRulesPageSize)
             {
                 pageSize = maxSpecialRulesPageSize;
             }
 
-            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId, pageNumber, pageSize);
+            var specialRules = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
             if (specialRules == null || specialRules.Count() <= 0)
             {
                 return NotFound();

@@ -30,14 +30,14 @@ namespace TTCompanion.API.FantasyFootball.Controllers
         }
 
         [HttpGet("skills", Name = "Get Skills")]
-        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId, int pageNumber = 1, int pageSize = 30)
+        public async Task<ActionResult<IEnumerable<SkillDto>>> GetRacesAsync(int? playerId, string? name, string? searchQuery, int pageNumber = 1, int pageSize = 30)
         {
             if(pageSize > maxSkillsPageSize)
             {
                 pageSize= maxSkillsPageSize;
             }
 
-            var skills = await _skillRepository.GetSkillsAsync(playerId, pageNumber, pageSize);
+            var skills = await _skillRepository.GetSkillsAsync(playerId, name, searchQuery, pageNumber, pageSize);
             if (skills == null)
             {
                 return NotFound();
