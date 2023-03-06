@@ -20,12 +20,7 @@ namespace TTCompanion.API.Utils
             argon2.Iterations = 4;
             argon2.MemorySize = 1024 * 1024; // 1 GB
             var bytes = argon2.GetBytes(16);
-            string byteString = "";
-            foreach(byte b in bytes)
-            {
-                byteString += b;
-            }
-            return byteString;
+            return Convert.ToBase64String(bytes);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TTCompanion.API.Tests
         }
 
         [Theory]
-        [InlineData("password", "2023 - 03 - 06 15:53:24.6767572", "214632487910611991161223601035532169126148")]
+        [InlineData("password", "2023-03-06 16:35:24.5184729", "0uk6wJyPKGbax/lgsvBaHQ==")]
         public void HashPassword_MatchesHash(string password, string datetime, string expected)
         {
             string actual = Argon2Hashing.HashPassword(password, DateTime.Parse(datetime));
@@ -29,9 +29,9 @@ namespace TTCompanion.API.Tests
         }
 
         [Theory]
-        [InlineData("passw0rd", "2023 - 03 - 06 15:53:24.6767572", "214632487910611991161223601035532169126148")]
-        [InlineData("password", "2023 - 03 - 06 15:53:23.6767572", "214632487910611991161223601035532169126148")]
-        [InlineData("Password", "2023 - 03 - 06 15:53:24.6767572", "214632487910611991161223601035532169126148")]
+        [InlineData("passw0rd", "2023-03-06 16:35:24.5184729", "0uk6wJyPKGbax/lgsvBaHQ==")]
+        [InlineData("password", "2023-03-06 16:35:23.5184729", "0uk6wJyPKGbax/lgsvBaHQ==")] //Wrong DateTime
+        [InlineData("Password", "2023-03-06 16:35:24.5184729", "0uk6wJyPKGbax/lgsvBaHQ==")]
         public void HashPassword_DoesNotMatchHash(string password, string datetime, string expected)
         {
             string actual = Argon2Hashing.HashPassword(password, DateTime.Parse(datetime));

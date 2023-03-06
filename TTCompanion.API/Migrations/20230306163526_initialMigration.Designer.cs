@@ -11,7 +11,7 @@ using TTCompanion.API.DBContexts;
 namespace TTCompanion.API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20230306155327_initialMigration")]
+    [Migration("20230306163526_initialMigration")]
     partial class initialMigration
     {
         /// <inheritdoc />
@@ -139,15 +139,15 @@ namespace TTCompanion.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("609e388f-0590-4a06-afb7-db482e7d0f08"),
+                            Id = new Guid("0005ed77-158c-4869-b91c-e338ea401d92"),
                             AccessTokens = 1,
                             EmailAddress = "email@email.com",
                             FirstName = "admin",
                             LastName = "user",
-                            LastRequestDateTime = new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7655),
-                            PasswordHash = "214632487910611991161223601035532169126148",
+                            LastRequestDateTime = new DateTime(2023, 3, 6, 16, 35, 24, 518, DateTimeKind.Local).AddTicks(4807),
+                            PasswordHash = "0uk6wJyPKGbax/lgsvBaHQ==",
                             PricePlan = 4,
-                            RegistrationDateTime = new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7572),
+                            RegistrationDateTime = new DateTime(2023, 3, 6, 16, 35, 24, 518, DateTimeKind.Local).AddTicks(4729),
                             Username = "admin"
                         });
                 });
