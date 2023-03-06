@@ -11,7 +11,8 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("ttcompanion.api/fantasyfootball")]
+    [ApiVersion("1.0")]
+    [Route("ttcompanion/api/v{version:apiVersion}/fantasyfootball")]
     public class RacesController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -26,7 +27,21 @@ namespace TTCompanion.API.FantasyFootball.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets a list of races
+        /// </summary>
+        /// <param name="name">Where name matches</param>
+        /// <param name="searchQuery">Where search query exists</param>
+        /// <param name="includeSpecialRules">Special rules included with the race data</param>
+        /// <param name="includePlayers">Players included with the race data</param>
+        /// <param name="pageSize">Max number of items to return in list</param>
+        /// <param name="pageNumber">Page number</param>
+        /// <returns>An ActionResult</returns>
+        /// <response code="200">Returns the requested list of races</response>
+        /// <response code="401">Request not authorized</response>
         [HttpGet("races", Name = "Get Races")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable<RaceDto>>> GetRacesAsync(
             string? name, string? searchQuery,
             bool includeSpecialRules = false,

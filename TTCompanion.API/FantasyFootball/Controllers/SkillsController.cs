@@ -1,21 +1,19 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using TTCompanion.API.FantasyFootball.Models.Skill;
+using TTCompanion.API.FantasyFootball.Services;
 using TTCompanion.API.FantasyFootball.Services.Player;
 using TTCompanion.API.FantasyFootball.Services.Skill;
-using TTCompanion.API.FantasyFootball.Services;
-using TTCompanion.API.FantasyFootball.Models.Skill;
-using TTCompanion.API.FantasyFootball.Models.SpecialRule;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Text.Json;
-using TTCompanion.API.FantasyFootball.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
-    [Route("ttcompanion.api/fantasyfootball")]
-    [Authorize]
     [ApiController]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [Route("ttcompanion/api/v{version:apiVersion}/fantasyfootball")]
     public class SkillsController : ControllerBase
     {
         private readonly IRepository _repository;

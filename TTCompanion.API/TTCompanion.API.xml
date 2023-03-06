@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TTCompanion.API</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:TTCompanion.API.DBContexts.DBContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)" -->
+        <member name="M:TTCompanion.API.FantasyFootball.Controllers.RacesController.GetRacesAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Gets a list of races
+            </summary>
+            <param name="name">Where name matches</param>
+            <param name="searchQuery">Where search query exists</param>
+            <param name="includeSpecialRules">Special rules included with the race data</param>
+            <param name="includePlayers">Players included with the race data</param>
+            <param name="pageSize">Max number of items to return in list</param>
+            <param name="pageNumber">Page number</param>
+            <returns>An ActionResult</returns>
+            <response code="200">Returns the requested list of races</response>
+            <response code="401">Request not authorized</response>
+        </member>
+        <member name="T:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto">
+            <summary>
+            DTO model for a Race without special rule or player data
+            </summary>
+        </member>
+        <member name="P:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto.Id">
+            <summary>
+            The Id of the Race
+            </summary>
+        </member>
+        <member name="P:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto.Name">
+            <summary>
+            The name of the race
+            </summary>
+        </member>
+        <member name="P:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto.CostOfReRolls">
+            <summary>
+            How much it costs for the race to purchase a reroll
+            </summary>
+        </member>
+        <member name="P:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto.MaxReRolls">
+            <summary>
+            Maximum number of rerolls that the race can have
+            </summary>
+        </member>
+        <member name="P:TTCompanion.API.FantasyFootball.Models.Race.RaceOnlyDto.CostOfBribes">
+            <summary>
+            How much it costs for the race to purchase a bribe
+            </summary>
+        </member>
+        <member name="T:TTCompanion.API.Migrations.initialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:TTCompanion.API.Migrations.initialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TTCompanion.API.Migrations.initialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TTCompanion.API.Migrations.initialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -10,9 +10,10 @@ using TTCompanion.API.FantasyFootball.Services.SpecialRule;
 
 namespace TTCompanion.API.FantasyFootball.Controllers
 {
-    [Route("ttcompanion.api/fantasyfootball")]
-    [Authorize]
     [ApiController]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [Route("ttcompanion/api/v{version:apiVersion}/fantasyfootball")]
     public class SpecialRulesController : ControllerBase
     {
         private readonly IRepository _repository;

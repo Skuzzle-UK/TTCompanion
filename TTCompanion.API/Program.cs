@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using TTCompanion.API.FantasyFootball;
 using TTCompanion.API.FantasyFootball.Services;
@@ -37,19 +38,14 @@ namespace TTCompanion.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(s =>
             {
-                s.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "TTCompanion.API",
-                    Description = "TTCompanion.API Swagger UI"
-                });
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+                s.IncludeXmlComments(xmlCommentsFullPath);
 
                 s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Input a valid token to access this API",
+                    Type = SecuritySchemeType.Http,
                     Scheme = "Bearer"
                 });
 
@@ -62,15 +58,15 @@ namespace TTCompanion.API
                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            }
+                            },
                         },
-                        Array.Empty<string>()
+                        new List<string>()
                     }
-                });
+                }) ;
             });
 
             builder.Services.AddSingleton<DataStore>();
-            builder.Services.AddDbContext<FantasyFootball.DBContexts.DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
+            builder.Services.AddDbContext<DBContexts.DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IRaceRepository, RaceRepository>();
@@ -96,12 +92,19 @@ namespace TTCompanion.API
                     };
                 });
 
+            builder.Services.AddApiVersioning(setupAction =>
+            {
+                setupAction.AssumeDefaultVersionWhenUnspecified = true;
+                setupAction.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                setupAction.ReportApiVersions = true;
+            });
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider
-                    .GetRequiredService<FantasyFootball.DBContexts.DBContext>();
+                    .GetRequiredService<DBContexts.DBContext>();
                 dbContext.Database.Migrate();
             }
 

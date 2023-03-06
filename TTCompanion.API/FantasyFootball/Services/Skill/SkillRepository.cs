@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TTCompanion.API.FantasyFootball.DBContexts;
+using TTCompanion.API.DBContexts;
 
 namespace TTCompanion.API.FantasyFootball.Services.Skill
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace TTCompanion.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialStructureAndSeed : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,6 +89,26 @@ namespace TTCompanion.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SpecialRules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Username = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    EmailAddress = table.Column<string>(type: "TEXT", nullable: false),
+                    RegistrationDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastRequestDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AccessTokens = table.Column<int>(type: "INTEGER", nullable: false),
+                    PricePlan = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,6 +244,11 @@ namespace TTCompanion.API.Migrations
                 values: new object[] { 1, false, "Masters of Undeath" });
 
             migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AccessTokens", "EmailAddress", "FirstName", "LastName", "LastRequestDateTime", "PasswordHash", "PricePlan", "RegistrationDateTime", "Username" },
+                values: new object[] { new Guid("609e388f-0590-4a06-afb7-db482e7d0f08"), 1, "email@email.com", "admin", "user", new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7655), "214632487910611991161223601035532169126148", 4, new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7572), "admin" });
+
+            migrationBuilder.InsertData(
                 table: "PlayerRace",
                 columns: new[] { "PlayersId", "RacesId" },
                 values: new object[,]
@@ -268,6 +294,9 @@ namespace TTCompanion.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "RaceSpecialRule");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Players");

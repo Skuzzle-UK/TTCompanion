@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TTCompanion.API.FantasyFootball.DBContexts;
+using TTCompanion.API.DBContexts;
 
 #nullable disable
 
@@ -85,6 +85,67 @@ namespace TTCompanion.API.Migrations
                         {
                             RacesId = 1,
                             SpecialRulesId = 1
+                        });
+                });
+
+            modelBuilder.Entity("TTCompanion.API.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessTokens")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastRequestDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PricePlan")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("609e388f-0590-4a06-afb7-db482e7d0f08"),
+                            AccessTokens = 1,
+                            EmailAddress = "email@email.com",
+                            FirstName = "admin",
+                            LastName = "user",
+                            LastRequestDateTime = new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7655),
+                            PasswordHash = "214632487910611991161223601035532169126148",
+                            PricePlan = 4,
+                            RegistrationDateTime = new DateTime(2023, 3, 6, 15, 53, 24, 676, DateTimeKind.Local).AddTicks(7572),
+                            Username = "admin"
                         });
                 });
 

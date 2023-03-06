@@ -12,7 +12,8 @@ namespace TTCompanion.API.FantasyFootball.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("ttcompanion.api/fantasyfootball")]
+    [ApiVersion("1.0")]
+    [Route("ttcompanion/api/v{version:apiVersion}/fantasyfootball")]
     public class PlayersController : ControllerBase
     {
         private readonly IRepository _repository;

@@ -1,15 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
+using TTCompanion.API.Entities;
 using TTCompanion.API.FantasyFootball.Entities;
+using TTCompanion.API.Models;
+using TTCompanion.API.Utils;
 
-namespace TTCompanion.API.FantasyFootball.DBContexts
+namespace TTCompanion.API.DBContexts
 {
     public class DBContext : DbContext
     {
+        public DbSet<User> Users { get; set; } = null!;
+
         public DbSet<Race> Races { get; set; } = null!;
         public DbSet<SpecialRule> SpecialRules { get; set; } = null!;
         public DbSet<Player> Players { get; set; } = null!;
         public DbSet<Skill> Skills { get; set; } = null!;
+
 
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
@@ -20,6 +25,29 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Setup admin user
+
+            var now = DateTime.Now;
+
+            var adminUser = new User()
+            {
+                Username = "admin",
+                FirstName = "admin",
+                LastName = "user",
+                EmailAddress = "email@email.com",
+                AccessTokens = 1,
+                PricePlan = PricePlans.SUPERUSER,
+                LastRequestDateTime = DateTime.Now,
+                RegistrationDateTime = now,
+                PasswordHash = Argon2Hashing.HashPassword("password", now) //Change to a really brutal hash
+            };
+
+            modelBuilder.Entity<User>()
+                .HasData(
+                    adminUser
+                );
+            #endregion
+
             #region Skills
             var dodge = new Skill(1, "Dodge");
             var defensive = new Skill(2, "Defensive");
@@ -93,14 +121,14 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
             };
 
             var amazon = new Race(3, "Amazon");
-            
+
             var blackOrc = new Race(4, "Black Orc")
             {
                 CostOfBribes = 50000
             };
 
             var chaosChosen = new Race(5, "Choas Chosen");
-            
+
             var chaosDwarf = new Race(6, "Chaos Dwarf")
             {
                 CostOfReRolls = 70000
@@ -157,7 +185,7 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
             };
 
             var khorne = new Race(17, "Khorne");
-            
+
             var lizardmen = new Race(18, "Lizardmen")
             {
                 CostOfReRolls = 70000
@@ -188,7 +216,7 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
             };
 
             var orc = new Race(24, "Orc");
-            
+
             var skaven = new Race(25, "Skaven")
             {
                 CostOfReRolls = 50000
@@ -210,12 +238,12 @@ namespace TTCompanion.API.FantasyFootball.DBContexts
                 CostOfReRolls = 70000,
                 CostOfBribes = 50000
             };
-            
+
             var vampire = new Race(29, "Vampire")
             {
                 CostOfReRolls = 70000
             };
-            
+
             var woodElf = new Race(30, "Wood Elf");
 
             modelBuilder.Entity<Race>()
