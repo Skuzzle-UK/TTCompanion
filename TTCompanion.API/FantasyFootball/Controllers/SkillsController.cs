@@ -45,7 +45,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound($"playerId: {playerId} does not exist.");
             }
 
-            var (skills, paginationMetadata) = await _skillRepository.GetSkillsAsync(playerId, name, searchQuery, pageNumber, pageSize);
+            var (skills, paginationMetadata) = await _skillRepository.GetSkillsAsync(playerId, name, searchQuery, pageSize, pageNumber);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 

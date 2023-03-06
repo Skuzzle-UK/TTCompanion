@@ -42,7 +42,7 @@ namespace TTCompanion.API.FantasyFootball.Controllers
                 return NotFound($"raceId: {raceId} does not exist");
             }
 
-            var (specialRules, paginationMetadata) = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageNumber, pageSize);
+            var (specialRules, paginationMetadata) = await _specialRuleRepository.GetSpecialRulesAsync(raceId, name, searchQuery, pageSize, pageNumber);
 
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
