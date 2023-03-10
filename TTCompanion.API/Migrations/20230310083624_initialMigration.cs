@@ -246,7 +246,7 @@ namespace TTCompanion.API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessTokens", "EmailAddress", "FirstName", "LastName", "LastRequestDateTime", "PasswordHash", "PricePlan", "RegistrationDateTime", "Username" },
-                values: new object[] { new Guid("0005ed77-158c-4869-b91c-e338ea401d92"), 1, "email@email.com", "admin", "user", new DateTime(2023, 3, 6, 16, 35, 24, 518, DateTimeKind.Local).AddTicks(4807), "0uk6wJyPKGbax/lgsvBaHQ==", 4, new DateTime(2023, 3, 6, 16, 35, 24, 518, DateTimeKind.Local).AddTicks(4729), "admin" });
+                values: new object[] { new Guid("72da891a-b309-444e-a0ce-30d20f899f44"), 1, "email@email.com", "admin", "user", new DateTime(2023, 3, 10, 8, 36, 21, 948, DateTimeKind.Local).AddTicks(2451), "8kamQPrTZ10GjPpTiq0R9w==", 4, new DateTime(2023, 3, 10, 8, 36, 21, 948, DateTimeKind.Local).AddTicks(2380), "admin" });
 
             migrationBuilder.InsertData(
                 table: "PlayerRace",

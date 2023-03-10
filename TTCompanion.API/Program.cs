@@ -10,6 +10,7 @@ using TTCompanion.API.FantasyFootball.Services.Player;
 using TTCompanion.API.FantasyFootball.Services.Race;
 using TTCompanion.API.FantasyFootball.Services.Skill;
 using TTCompanion.API.FantasyFootball.Services.SpecialRule;
+using TTCompanion.API.Services;
 
 namespace TTCompanion.API
 {
@@ -67,6 +68,8 @@ namespace TTCompanion.API
 
             builder.Services.AddSingleton<DataStore>();
             builder.Services.AddDbContext<DBContexts.DBContext>(DbContextOptions => DbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FFDBConnectionString"]));
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IRaceRepository, RaceRepository>();

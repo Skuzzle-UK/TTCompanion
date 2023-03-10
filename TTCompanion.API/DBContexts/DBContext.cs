@@ -26,7 +26,6 @@ namespace TTCompanion.API.DBContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region Setup admin user
-
             var now = DateTime.Now;
 
             var adminUser = new User()
@@ -39,7 +38,7 @@ namespace TTCompanion.API.DBContexts
                 PricePlan = PricePlans.SUPERUSER,
                 LastRequestDateTime = DateTime.Now,
                 RegistrationDateTime = now,
-                PasswordHash = Argon2Hashing.HashPassword("password", now) //Change to a really brutal hash
+                PasswordHash = Argon2Hashing.HashPassword("password", now)
             };
 
             modelBuilder.Entity<User>()

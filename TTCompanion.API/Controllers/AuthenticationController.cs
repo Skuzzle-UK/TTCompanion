@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using TTCompanion.API.Models;
+using TTCompanion.API.Services;
+using TTCompanion.API.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace TTCompanion.API.Controllers
@@ -16,36 +20,27 @@ namespace TTCompanion.API.Controllers
             public string? Password { get; set; }
         }
 
-        private class FFInfoUser
-        {
-            public int UserId { get; set; }
-            public string Username { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-
-            public FFInfoUser(int userId, string userName, string firstName, string lastName, string emailAddress)
-            {
-                UserId = userId;
-                Username = userName;
-                FirstName = firstName;
-                LastName = lastName;
-                Email = emailAddress;
-            }
-        }
-
         private readonly IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(IConfiguration configuration)
+        public AuthenticationController(IConfiguration configuration, IUserRepository userRepository, IMapper mapper)
         {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _configuration = configuration;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         [HttpPost("authenticate")]
-        public ActionResult<string> Authenticate(AuthenticationRequestBody authenticationRequestBody)
+        public async Task<ActionResult<string>> Authenticate(AuthenticationRequestBody authenticationRequestBody)
         {
+            if(authenticationRequestBody == null)
+            {
+                return BadRequest("Username and password are required");
+            }
+
             //Step 1: Validate the user/password
-            var user = ValidateUserCredentials(authenticationRequestBody.Username, authenticationRequestBody.Password);
+            var user = await ValidateUserCredentials(authenticationRequestBody.Username, authenticationRequestBody.Password);
 
             if (user == null)
             {
@@ -58,10 +53,10 @@ namespace TTCompanion.API.Controllers
 
             //The claims that
             var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", user.UserId.ToString()));
+            claimsForToken.Add(new Claim("sub", user.Id.ToString()));
             claimsForToken.Add(new Claim("given_name", user.FirstName));
             claimsForToken.Add(new Claim("family_name", user.LastName));
-            claimsForToken.Add(new Claim("email", user.Email));
+            claimsForToken.Add(new Claim("email", user.EmailAddress));
 
             var jwtSecurityToken = new JwtSecurityToken(
                 _configuration["Authentication:Issuer"],
@@ -75,11 +70,21 @@ namespace TTCompanion.API.Controllers
             return Ok(tokenToReturn);
         }
 
-        private FFInfoUser ValidateUserCredentials(string? username, string? password)
+        private async Task<UserDto?> ValidateUserCredentials(string username, string password)
         {
-            //@TODO do password check here against DB
+            var user = await _userRepository.GetUser(username, password);
+            if (user == null)
+            {
+                return null;
+            }
 
-            return new FFInfoUser(1, username ?? "", "Test", "User", "email@email.com");
+            string calculatedHash = Argon2Hashing.HashPassword(password, user.RegistrationDateTime);
+            if (calculatedHash != user.PasswordHash)
+            {
+                return null;
+            }
+
+            return _mapper.Map<UserDto>(user);
         }
     }
 }
