@@ -14,12 +14,6 @@ namespace TTCompanion.API.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        public class AuthenticationRequestBody
-        {
-            public string? Username { get; set; }
-            public string? Password { get; set; }
-        }
-
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
