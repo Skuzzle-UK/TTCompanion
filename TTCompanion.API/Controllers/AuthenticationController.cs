@@ -10,7 +10,7 @@ using System.Text;
 
 namespace TTCompanion.API.Controllers
 {
-    [Route("ttcompanion.api/fantasyfootball/authentication")]
+    [Route("ttcompanion/api/v{version:apiVersion}/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -34,13 +34,13 @@ namespace TTCompanion.API.Controllers
         [HttpPost("authenticate")]
         public async Task<ActionResult<string>> Authenticate(AuthenticationRequestBody authenticationRequestBody)
         {
-            if(authenticationRequestBody == null)
+            if(authenticationRequestBody == null || authenticationRequestBody.Username == null || authenticationRequestBody.Password == null)
             {
                 return BadRequest("Username and password are required");
             }
 
             //Step 1: Validate the user/password
-            var user = await ValidateUserCredentials(authenticationRequestBody.Username, authenticationRequestBody.Password);
+            var user = await ValidateUserCredentials(authenticationRequestBody.Username!, authenticationRequestBody.Password!);
 
             if (user == null)
             {
