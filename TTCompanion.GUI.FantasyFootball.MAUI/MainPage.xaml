@@ -4,34 +4,18 @@
              x:Class="TTCompanion.GUI.FantasyFootball.MAUI.MainPage">
 
     <ScrollView>
-        <Grid HeightRequest="500">
+        <Grid x:Name="MenuGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-
-            <Button Grid.Column="0" Grid.Row="0" Text="1" />
-            <Button Grid.Column="1" Grid.Row="0" Text="2" />
-            <Button Grid.Column="2" Grid.Row="0" Text="3" />
-            <Button Grid.Column="3" Grid.Row="0" Text="4" />
-            <Button Grid.Column="4" Grid.Row="0" Text="5" />
-            <Button Grid.Column="0" Grid.Row="1" Text="6" />
-            <Button Grid.Column="1" Grid.Row="1" Text="7" />
-            <Button Grid.Column="2" Grid.Row="1" Text="8" />
-            <Button Grid.Column="3" Grid.Row="1" Text="9" />
-            <Button Grid.Column="4" Grid.Row="1" Text="10" />
-            <Button Grid.Column="0" Grid.Row="2" Text="11" />
-            <Button Grid.Column="1" Grid.Row="2" Text="12" />
-            <Button Grid.Column="2" Grid.Row="2" Text="13" />
-            <Button Grid.Column="3" Grid.Row="2" Text="14" />
         </Grid>
     </ScrollView>
 
