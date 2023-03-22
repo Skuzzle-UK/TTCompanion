@@ -1,9 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
-
-namespace TTCompanion.GUI.FantasyFootball.MAUI
+﻿namespace TTCompanion.GUI.FantasyFootball.MAUI
 {
     public partial class MainPage : ContentPage
     {
@@ -12,8 +7,13 @@ namespace TTCompanion.GUI.FantasyFootball.MAUI
         public MainPage()
         {
             InitializeComponent();
-            DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
+            Menu.SizeChanged += Menu_MainDisplayInfoChanged;
             GetMenuItems();
+            SetupMenuGrid();
+        }
+
+        private void Menu_MainDisplayInfoChanged(object sender, EventArgs e)
+        {
             SetupMenuGrid();
         }
 
@@ -24,82 +24,44 @@ namespace TTCompanion.GUI.FantasyFootball.MAUI
 
         private void GetMenuItems()
         {
-            //menuItems.Clear();
-            menuItems = new List<Button>();
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Teams"
-                });
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Leagues"
-                });
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Tornaments"
-                });
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Settings"
-                });
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Exit"
-                });
-            menuItems.Add(
-                new Button()
-                {
-                    Text = "Extra Button"
-                });
+            menuItems = Menu.Children.OfType<Button>().ToList();
         }
 
         private void SetupMenuGrid()
         {
-            var numberOfColumns = 5;
+            double buttonSize;
             if (DeviceDisplay.Current.MainDisplayInfo.Width < DeviceDisplay.Current.MainDisplayInfo.Height)
             {
-                numberOfColumns = 2;
+                buttonSize = Math.Floor(Menu.Width / 2);
+            }
+            else
+            {
+                buttonSize = Math.Floor(Menu.Width / 4);
             }
 
-            MenuGrid.Children.Clear();
-            MenuGrid.ColumnDefinitions.Clear();
-            MenuGrid.RowDefinitions.Clear();
-
-            ColumnDefinition cd = new ColumnDefinition();
-            for (int i = 0; i < numberOfColumns; i++)
+            foreach (var item in menuItems)
             {
-                MenuGrid.AddColumnDefinition(cd);
+                item.WidthRequest = buttonSize;
+                item.HeightRequest = buttonSize;
             }
+        }
 
-            decimal val = (decimal)menuItems.Count / (decimal)numberOfColumns;
-            var numberOfRows = Math.Ceiling(val);
-
-            RowDefinition rd = new RowDefinition();
-            for (int i = 0; i < numberOfRows; i++)
+        private async void MenuItem_ClickedAsync(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            switch (button.Text)
             {
-                MenuGrid.AddRowDefinition(rd);
-            }
-
-            var column = 0;
-            var row = 0;
-
-            foreach (Button button in menuItems)
-            {
-                MenuGrid.SetColumn(button, column);
-                MenuGrid.SetRow(button, row);
-                MenuGrid.Children.Add(button);
-
-                column++;
-                if (column >= numberOfColumns)
-                {
-                    column = 0;
-                    row++;
-                }
+                case "Teams":
+                    await Navigation.PushAsync(new TeamsPage());
+                    break;
+                case "Skills quick reference":
+                    break;
+                case "Leagues":
+                    break;
+                case "Tournament":
+                    break;
+                case "Settings":
+                    break;
             }
         }
     }

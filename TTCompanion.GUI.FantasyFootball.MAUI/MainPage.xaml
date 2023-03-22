@@ -4,19 +4,12 @@
              x:Class="TTCompanion.GUI.FantasyFootball.MAUI.MainPage">
 
     <ScrollView>
-        <Grid x:Name="MenuGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-        </Grid>
+        <FlexLayout x:Name="Menu" Wrap="Wrap" AlignContent="Start">
+            <Button Text="Teams" Clicked="MenuItem_ClickedAsync"/>
+            <Button Text="Skills quick reference" Clicked="MenuItem_ClickedAsync"/>
+            <Button Text="Leagues" Clicked="MenuItem_ClickedAsync"/>
+            <Button Text="Tournaments" Clicked="MenuItem_ClickedAsync"/>
+            <Button Text="Settings" Clicked="MenuItem_ClickedAsync"/>
+        </FlexLayout>
     </ScrollView>
-
 </ContentPage>
