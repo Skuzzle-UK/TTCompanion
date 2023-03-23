@@ -10,8 +10,8 @@ namespace TTCompanion.GUI.FantasyFootball.MAUI
             Routing.RegisterRoute("loading", typeof(LoginPage));
             Routing.RegisterRoute("login", typeof(LoginPage));
             Routing.RegisterRoute("main", typeof(MainPage));
-            Routing.RegisterRoute("teams", typeof(TeamsPage));
-            Routing.RegisterRoute("settings", typeof(SettingsPage));
+            //Routing.RegisterRoute("teams", typeof(TeamsPage));
+            //Routing.RegisterRoute("settings", typeof(SettingsPage));
         }
     }
 }

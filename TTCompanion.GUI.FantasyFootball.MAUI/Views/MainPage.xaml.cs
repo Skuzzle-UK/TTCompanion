@@ -44,8 +44,8 @@ namespace TTCompanion.GUI.FantasyFootball.MAUI.Views
             switch (button.Text)
             {
                 case "Teams":
-                    await Shell.Current.GoToAsync("///teams");
-                    //await Navigation.PushAsync(new TeamsPage());
+                    //await Shell.Current.GoToAsync("///teams");
+                    await Navigation.PushAsync(new TeamsPage());
                     break;
                 case "Skills quick reference":
                     break;
@@ -54,6 +54,7 @@ namespace TTCompanion.GUI.FantasyFootball.MAUI.Views
                 case "Tournament":
                     break;
                 case "Settings":
+                    await Navigation.PushAsync(new SettingsPage());
                     break;
             }
         }

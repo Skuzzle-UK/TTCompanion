@@ -11,7 +11,7 @@ public partial class LoadingPage : ContentPage
     {
         if (await isAuthenticated())
         {
-            await Shell.Current.GoToAsync("///home");
+            await Shell.Current.GoToAsync("///main");
         }
         else
         {
