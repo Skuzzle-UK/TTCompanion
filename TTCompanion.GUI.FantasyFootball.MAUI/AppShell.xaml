@@ -16,11 +16,4 @@
     <ShellContent
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="main" />
-    <ShellContent
-        ContentTemplate="{DataTemplate views:TeamsPage}"
-        Route="teams" />
-    <ShellContent
-        ContentTemplate="{DataTemplate views:SettingsPage}"
-        Route="settings" />
-
 </Shell>
