@@ -1,7 +1,11 @@
-﻿namespace TTCompanion.GUI.FantasyFootball.MAUI
+﻿using System.Net.Http;
+
+namespace TTCompanion.GUI.FantasyFootball.MAUI
 {
     public static class MauiProgram
     {
+        public static HttpClient httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:7295") };
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();

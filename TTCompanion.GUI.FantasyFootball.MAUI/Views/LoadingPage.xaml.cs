@@ -1,35 +1,36 @@
-namespace TTCompanion.GUI.FantasyFootball.MAUI.Views;
-
-public partial class LoadingPage : ContentPage
+namespace TTCompanion.GUI.FantasyFootball.MAUI.Views
 {
-	public LoadingPage()
-	{
-		InitializeComponent();
-	}
-
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    public partial class LoadingPage : ContentPage
     {
-        if (await isAuthenticated())
+        public LoadingPage()
         {
-            await Shell.Current.GoToAsync("///main");
+            InitializeComponent();
         }
-        else
+
+        protected override async void OnNavigatedTo(NavigatedToEventArgs args)
         {
-            await Shell.Current.GoToAsync("login");
+            if (await isAuthenticated())
+            {
+                await Shell.Current.GoToAsync("///main");
+            }
+            else
+            {
+                await Shell.Current.GoToAsync("login");
+            }
+            base.OnNavigatedTo(args);
         }
-        base.OnNavigatedTo(args);
-    }
 
-    async Task<bool> isAuthenticated()
-    {
-        await Task.Delay(2000);
-        var hasAuth = await SecureStorage.GetAsync("hasAuth");
-        return !(hasAuth == null);
-    }
+        async Task<bool> isAuthenticated()
+        {
+            await Task.Delay(2000);
+            var hasAuth = await SecureStorage.GetAsync("hasAuth");
+            return !(hasAuth == null);
+        }
 
-    protected override bool OnBackButtonPressed()
-    {
-        Application.Current.Quit();
-        return true;
+        protected override bool OnBackButtonPressed()
+        {
+            Application.Current.Quit();
+            return true;
+        }
     }
 }

@@ -1,27 +1,53 @@
-namespace TTCompanion.GUI.FantasyFootball.MAUI.Views;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
-public partial class LoginPage : ContentPage
+namespace TTCompanion.GUI.FantasyFootball.MAUI.Views
 {
-	public LoginPage()
-	{
-		InitializeComponent();
-	}
-
-    private async void LoginButton_Clicked(object sender, EventArgs e)
+    public partial class LoginPage : ContentPage
     {
-        if (IsCredentialCorrect(Username.Text, Password.Text))
+        private readonly HttpClient _httpClient;
+        private string _authToken;
+        public LoginPage()
         {
-            await SecureStorage.SetAsync("hasAuth", "true");
-            await Shell.Current.GoToAsync("///main");
+            _httpClient = MauiProgram.httpClient;
+            InitializeComponent();
         }
-        else
+
+        private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Login failed", "Uusername or password if invalid", "Try again");
+            if (IsCredentialCorrect(Username.Text, Password.Text).Result)
+            {
+                await SecureStorage.SetAsync("hasAuth", "true");
+                await SecureStorage.SetAsync("authToken", _authToken);
+                await Shell.Current.GoToAsync("///main");
+            }
+            else
+            {
+                SecureStorage.RemoveAll();
+                await DisplayAlert("Login failed", "Username or password is invalid", "Try again");
+            }
+        }
+
+        private async Task<bool> IsCredentialCorrect(string username, string password)
+        {
+            var user = new User() { Username = username, Password = password };
+            var json = JsonConvert.SerializeObject(user);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = _httpClient.PostAsync("https://localhost:7295/ttcompanion/api/v1/authentication/authenticate", data).Result;
+            var text = response.Content.ReadAsStringAsync();
+            if(response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return false;
+            }
+            _authToken = text.Result;
+            return true;
         }
     }
 
-    private bool IsCredentialCorrect(string username, string password)
+    public class User
     {
-        return true;
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
